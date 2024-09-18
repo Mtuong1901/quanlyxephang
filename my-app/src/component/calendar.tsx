@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment, { Moment } from 'moment';
-import 'moment/locale/vi'; // Đảm bảo bạn đã cài moment/locale/vi nếu cần
-
+import 'moment/locale/vi'; 
 const daysOfWeek = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
 const Calendar: React.FC = () => {
