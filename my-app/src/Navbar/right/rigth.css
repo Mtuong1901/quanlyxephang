@@ -1,0 +1,410 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Nunito;
+}
+
+.header {
+    text-align: center;
+}
+
+.header svg {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 28px;
+    left: 109px;
+    z-index: 1;
+}
+
+.user-avt img {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 24px;
+    left: 165px;
+}
+
+.hello {
+    position: absolute;
+    top: 24px;
+    left: 213px;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+}
+
+.user-name {
+    position: absolute;
+    top: 42px;
+    left: 213px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700 bold;
+}
+
+.r-title {
+    position: absolute;
+    width: 118px;
+    height: 36px;
+    top: 104px;
+    left: 24px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff7506;
+    line-height: 36px;
+}
+
+.figure {
+    display: flex;
+
+}
+
+/* device*********************************************************************** */
+.device {
+    position: relative;
+    width: 353px;
+    height: 83px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: #ccc 2px 0 8px 1px;
+    margin-bottom: 12px;
+}
+
+.device img {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 11px;
+    left: 16px;
+}
+
+.device .number {
+    position: absolute;
+    top: 14px;
+    left: 88px;
+    width: 64px;
+    height: 36px;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 36px;
+    color: #535261;
+}
+
+.device svg {
+    position: absolute;
+    top: 50px;
+    left: 88px;
+}
+
+.device .d-title {
+    position: absolute;
+    top: 50px;
+    left: 106px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+    color: #ff7506;
+}
+
+.d-list-active {
+    position: absolute;
+    width: 145px;
+    height: 47px;
+    top: 18px;
+    left: 192px;
+    border-radius: 4px;
+}
+
+.d-active {
+    color: #FFD130;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.d-un-active {
+    color: #7e7d88;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.d-list-active .d-p-active {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    color: #ff7506;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+}
+
+.d-list-active .d-p-un {
+    position: absolute;
+    top: 22px;
+    right: 0;
+    color: #ff7506;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+}
+
+/* Sẻvice************************************************************************** */
+.service {
+    position: relative;
+    width: 353px;
+    height: 83px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: #ccc 2px 0 8px 1px;
+    margin-bottom: 12px;
+}
+
+.service img {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 11px;
+    left: 16px;
+}
+
+.service .number {
+    position: absolute;
+    top: 14px;
+    left: 88px;
+    width: 64px;
+    height: 36px;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 36px;
+    color: #535261;
+}
+
+.service svg {
+    position: absolute;
+    top: 50px;
+    left: 88px;
+}
+
+.service .s-title {
+    position: absolute;
+    top: 50px;
+    left: 106px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+    color: #4277FF;
+}
+
+.s-list-active {
+    position: absolute;
+    width: 145px;
+    height: 47px;
+    top: 18px;
+    left: 192px;
+    border-radius: 4px;
+}
+
+.s-active {
+    color: #4277FF;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.s-un-active {
+    color: #7e7d88;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.s-list-active .s-p-active {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    color: #4277FF;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+}
+
+.s-list-active .s-p-un {
+    position: absolute;
+    top: 22px;
+    right: 0;
+    color: #4277FF;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+}
+
+/* number************************************************************************** */
+.number-level {
+    position: relative;
+    width: 353px;
+    height: 83px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: #ccc 2px 0 8px 1px;
+    margin-bottom: 12px;
+}
+
+.number-level img {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 11px;
+    left: 16px;
+}
+
+.number-level .number {
+    position: absolute;
+    top: 14px;
+    left: 88px;
+    width: 64px;
+    height: 36px;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 36px;
+    color: #535261;
+}
+
+.number-level svg {
+    position: absolute;
+    top: 50px;
+    left: 88px;
+}
+
+.number-level .n-title {
+    position: absolute;
+    top: 50px;
+    left: 106px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+    color: #35C75A;
+}
+
+.n-list-active {
+    position: absolute;
+    width: 145px;
+    height: 47px;
+    top: 10px;
+    left: 192px;
+    border-radius: 4px;
+}
+
+.n-active {
+    color: #35C75A;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.n-un-active {
+    color: #7e7d88;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.n-list-active .n-p-active {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    color: #35C75A;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+}
+
+.n-list-active .n-p-un {
+    position: absolute;
+    top: 22px;
+    right: 0;
+    color: #35C75A;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+}
+
+.n-skip {
+    position: absolute;
+    width: 124px;
+    height: 21px;
+    color: #F178B6;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.n-p-skip {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    color: #35C75A;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+}
+
+/* calendarrrrrrrrrrrrrrrrrrrrrr******************************************** */
+.calendar {
+    position: absolute;
+    top: 445px;
+    left: 24px;
+    width: 353px;
+    height: 336px;
+    text-align: center;
+    background-color: #ffffff;
+    box-shadow:#ccc  2px  2px 15px 0;
+    border-radius: 12px;
+    font-family: Nonito;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+.calendar-header button {
+    background-color: #ffffff;
+    border: none;
+    font-size: 18px;
+    font-weight:bold;
+    cursor: pointer;
+    padding: 10px;
+    color: #ff7506;
+}
+
+table {
+    width: 100%;
+}
+
+th,
+td {
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+}
+
+thead th {
+    background-color: #ffffff;
+    color: #ff7506;
+    font-size: 14px;
+}
+
+tbody td {
+    height: 36px;
+    padding: 10px;
+}
+
+tbody td:hover {
+    cursor: pointer;
+}
