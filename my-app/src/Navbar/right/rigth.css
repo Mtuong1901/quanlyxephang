@@ -352,17 +352,22 @@
 }
 
 /* calendarrrrrrrrrrrrrrrrrrrrrr******************************************** */
-.calendar {
+.container{
     position: absolute;
-    top: 445px;
-    left: 24px;
-    width: 353px;
-    height: 336px;
-    text-align: center;
     background-color: #ffffff;
     box-shadow:#ccc  2px  2px 15px 0;
     border-radius: 12px;
     font-family: Nonito;
+    text-align: center;
+    top: 445px;
+    left: 24px;
+    width: 353px;
+    height: 336px;
+}
+.calendar {
+    width: 294px;
+    height: 304px;
+    
 }
 
 .calendar-header {
