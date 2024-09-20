@@ -15,39 +15,32 @@ const Calendar: React.FC = () => {
         const year = date.year();
         const month = date.month();
 
-        // Ngày đầu tiên và cuối cùng của tháng hiện tại
         const startOfMonth = moment(date).startOf('month');
         const endOfMonth = moment(date).endOf('month');
 
-        // Ngày đầu tiên trong tuần của tháng hiện tại
-        const startDayOfWeek = startOfMonth.day(); // Chủ nhật là 0, thứ 2 là 1
-        const adjustedStartDay = (startDayOfWeek + 6) % 7; // Điều chỉnh để bắt đầu từ thứ 2
+        const startDayOfWeek = startOfMonth.day();
+        const adjustedStartDay = (startDayOfWeek + 6) % 7;
 
         const totalDaysInMonth = date.daysInMonth();
 
-        // Ngày cuối cùng của tháng trước
         const lastDayOfPrevMonth = startOfMonth.clone().subtract(1, 'day').date();
 
-        // Tạo mảng các ngày của tháng trước
         const daysInPrevMonth = Array.from(
             { length: adjustedStartDay },
             (_, index) => lastDayOfPrevMonth - (adjustedStartDay - 1) + index
         );
 
-        // Tạo mảng các ngày của tháng hiện tại
         const daysOfMonth = Array.from(
             { length: totalDaysInMonth },
             (_, index) => index + 1
         );
 
-        // Ngày cuối cùng của tháng sau
         const endDayOfWeek = endOfMonth.day();
         const daysInNextMonth = Array.from(
             { length: (7 - endDayOfWeek) % 7 },
             (_, index) => index + 1
         );
 
-        // Kết hợp các ngày thành một mảng
         const daysArray = [
             ...daysInPrevMonth,
             ...daysOfMonth,
