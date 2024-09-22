@@ -65,7 +65,7 @@ const Calendar: React.FC = () => {
         fontSize: '16px',
         fontWeight: '700',
         padding: '10px',
-        margin: '0',
+        marginBottom: '8px',
         lineHeight: '21.82px',
     }
     const headerStyle:React.CSSProperties ={
@@ -73,7 +73,7 @@ const Calendar: React.FC = () => {
         borderWidth : '90%',
 }
     return (
-        <div className='container'>
+        <div className='calendar-container'>
         <div className="calendar">
             <div className="calendar-header" style={headerStyle}>
                 <button className="prev-month" onClick={handlePrevMonth}>
@@ -102,7 +102,6 @@ const Calendar: React.FC = () => {
                                     .map((day, dayIndex) => {
                                         const isToday = day === currentDate.date() && currentDate.month() === moment().month() && currentDate.year() === moment().year();
                                         const cellStyle: React.CSSProperties = {
-                                            padding: '10px',
                                             textAlign: 'center' as 'center',
                                             backgroundColor: isToday ? '#FF7506' : day === null ? '#f0f0f0' : 'transparent',
                                             color: isToday ? 'white' : 'black',

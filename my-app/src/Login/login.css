@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Nunito;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.login-section-1 {
+    width:  41.11%;
+    position: relative;
+
+}
+
+.login-logo img{
+    position: absolute;
+    width:170px;
+    height: 136px;
+    top: 82px;
+    left: 208px;
+    margin-bottom: 75px;
+}
+.login-form{
+    position: absolute;
+    top: 293px;
+    left: 94px;
+}
+.login-form label{
+    color: #37474F;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 18px;
+    height: 27px;
+}
+.login-form input{
+    width: 400px;
+    height: 40px;
+    border: 1.5px solid #D4D4D7;
+    border-radius: 8px;
+    padding: 10px  270px  10px  12px;
+    margin: 4px 0 16px 0;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.btn-submit{
+    width: 162px;
+    height: 40px;
+    color: #ffffff;
+    background-color: #FF7506;
+    padding: 10px, 24px, 10px, 24px;
+    border-radius: 8px;
+    margin: 19px 0 0  121px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+}
+.password-container i{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: 15px;
+    top: 112px;
+    font-size: 20px;
+    color: #7E7D88;
+    cursor: pointer;
+}
+.forgotpass{
+    color: #E73F3F;
+    cursor: pointer;
+    padding: 0;
+}
+.login-section-2 {
+    width:  58.89%;
+    height: 810px;
+    background-color: #ffffff;
+    position: relative;
+}
+.login-img-background{
+    width: 605px;
+    height: 614.06px;
+    margin: 112.94px 0 0 79px;
+    background-image: url('../../public/images/Group\ 341.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.login-img-background>h3{
+    position: absolute;
+    width: 142px;
+    height: 54px;
+    top: 407px;
+    left: 454px;
+    color: #FF7506;
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 51px;
+}
+.login-img-background>span{
+    position: absolute;
+    width: 361px;
+    height: 54px;
+    top: 454px;
+    left: 454px;
+    color: #FF7506;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 54px;
+}

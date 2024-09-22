@@ -127,7 +127,7 @@ const LeftNav = () => {
                         <path d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5" stroke="#FF7506" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
 
-                    <a href="#">Đăng xuất</a>
+                    <a href="/login">Đăng xuất</a>
                 </div>
             </div>
         </>
