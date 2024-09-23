@@ -1,0 +1,31 @@
+
+.btn-cancel{
+    width: 162px;
+    height: 40px;
+    color: #FF7506;
+    border: 1px solid #FF7506;
+    background-color: #ffffff;
+    padding: 10px  24px  10px 24px;
+    border-radius: 8px;
+    margin: 19px 0 8px  20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+}
+.btn-continue{
+        text-align: center;
+        width: 162px;
+        height: 40px;
+        color: #ffffff;
+        background-color: #FF7506;
+        padding: 10px  24px 10px  24px;
+        border-radius: 8px;
+        margin: 19px 0 8px  34px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+
+}

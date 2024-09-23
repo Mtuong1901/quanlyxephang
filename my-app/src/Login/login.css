@@ -10,6 +10,7 @@
     justify-content: center;
     max-width: 100%;
     margin: 0 auto;
+    position: relative;
 }
 
 .login-section-1 {
@@ -43,7 +44,7 @@
     height: 40px;
     border: 1.5px solid #D4D4D7;
     border-radius: 8px;
-    padding: 10px  270px  10px  12px;
+    padding: 10px 50px  10px  12px;
     margin: 4px 0 16px 0;
     font-size: 18px;
     font-weight: 400;

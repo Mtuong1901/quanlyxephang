@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/FirebaseConfig";
 
 export const loginUser = async (username: string, password: string) => {

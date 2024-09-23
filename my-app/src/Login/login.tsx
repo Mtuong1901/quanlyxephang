@@ -69,11 +69,11 @@ const Login: React.FC = () => {
                             ></i>
                         </div>
                         <div>
-                        {!loginerror && <Link to="#" className='forgotpass'>Quên mật khẩu?</Link>}
+                        {!loginerror && <Link to="/login/quenmatkhau" className='forgotpass'>Quên mật khẩu?</Link>}
                         {loginerror && <p className="error-message" style={{ color: '#E73F3F', fontSize:"14px"}}><i className="fa-solid fa-circle-exclamation" style={{marginRight: "5px"}}></i>{loginerror}</p>} 
                         </div>
                         <button type='submit' className='btn-submit'>Đăng nhập</button> <br />
-                        {loginerror && <Link to="#" className='forgotpass2'>Quên mật khẩu?</Link>} 
+                        {loginerror && <Link to="/login/quenmatkhau" className='forgotpass2'>Quên mật khẩu?</Link>} 
                     </form>
                 </div>
             </div>

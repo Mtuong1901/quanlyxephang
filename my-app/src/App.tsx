@@ -5,6 +5,7 @@ import LeftNav from './Navbar/left/leftnav';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login/login';
 import React from 'react'; // Import React để dùng React.ReactNode
+import Forgotpass from './Login/forgotpass/forgotpass';
 
 // Định nghĩa kiểu cho props, đặc biệt là kiểu của children
 type MainLayoutProps = {
@@ -39,6 +40,7 @@ function App() {
           </MainLayout>
         } />
         <Route path="/login" element={<Login />} />
+        <Route path="/login/quenmatkhau" element={<Forgotpass/>} />
       </Routes>
     </Router>
   );
