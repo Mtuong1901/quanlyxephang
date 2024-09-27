@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './Login/login';
 import React from 'react'; // Import React để dùng React.ReactNode
 import Forgotpass from './Login/forgotpass/forgotpass';
+import Resetpassword from './Login/resetpass/resetpass';
 
 // Định nghĩa kiểu cho props, đặc biệt là kiểu của children
 type MainLayoutProps = {
@@ -41,6 +42,7 @@ function App() {
         } />
         <Route path="/login" element={<Login />} />
         <Route path="/login/quenmatkhau" element={<Forgotpass/>} />
+        <Route path="/login/resetpassword" element={<Resetpassword/>} />
       </Routes>
     </Router>
   );

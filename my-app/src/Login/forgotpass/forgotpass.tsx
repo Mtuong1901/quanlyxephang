@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './forgotpass.css';
 import { collection, getDocs} from 'firebase/firestore';
 import { db } from '../../config/FirebaseConfig';
+import { Link } from 'react-router-dom';
 
 const Forgotpass = () => {
     const [email, setEmail] = useState('');
@@ -65,15 +66,14 @@ const Forgotpass = () => {
                         {message && <p className='message'>{message}</p>}
                     </form>
                     <div className='form-btn'>
-                            <button type='button' className='btn-cancel'>Hủy</button>
-                            <button type='submit'  className='btn-continue'>Tiếp tục</button>
+                            <Link to='/login' type='button' className='btn-cancel'>Hủy</Link>
+                            <Link to={`/login/resetpassword&email=${email}`} type='submit'  className='btn-continue'>Tiếp tục</Link>
                         </div>
                 </div>
             </div>
-            <div className='login-section-2'>
-                <div className='login-img-background'>
-                    <h3>Hệ thống</h3>
-                    <span>Quản lý xếp hàng</span>
+            <div className='for-section-2'>
+                <div className='for-img-background'>
+                    
                 </div>
             </div>
         </div>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment, { Moment } from 'moment';
 import 'moment/locale/vi';
-import { prototype } from 'events';
 
 const daysOfWeek = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
@@ -12,8 +11,6 @@ const Calendar: React.FC = () => {
         updateCalendar(currentDate);
     }, [currentDate]);
     const updateCalendar = (date: Moment) => {
-        const year = date.year();
-        const month = date.month();
 
         const startOfMonth = moment(date).startOf('month');
         const endOfMonth = moment(date).endOf('month');

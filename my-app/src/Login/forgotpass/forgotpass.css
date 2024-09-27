@@ -29,3 +29,17 @@
         line-height: 24px;
 
 }
+.for-section-2 {
+    width:  58.89%;
+    height: 810px;
+    background-color: #ffffff;
+    position: relative;
+}
+.for-img-background{
+    width: 605px;
+    height: 614.06px;
+    margin: 112.94px 0 0 79px;
+    background-image: url('../../../public/images/Frame.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
