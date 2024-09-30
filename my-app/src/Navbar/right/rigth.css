@@ -388,12 +388,12 @@
     padding: 10px;
     color: #ff7506;
 }
-.calendar table {
+.calendar .calendar-table {
     width: 100%;
 }
 
 
-thead th {
+.calendar-table thead th {
     background-color: #ffffff;
     color: #ff7506;
     font-size: 16px;
@@ -402,13 +402,13 @@ thead th {
     margin-top: '8px';
 }
 
-tbody td {
+.calendar-table tbody td {
     width: 36px ;
     height: 36px;
     gap: 10px;
     font-size: 16px;
 }
 
-tbody td:hover {
+.calendar-table tbody td:hover {
     cursor: pointer;
 }

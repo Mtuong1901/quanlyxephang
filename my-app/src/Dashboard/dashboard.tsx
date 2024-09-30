@@ -1,8 +1,8 @@
 import './dashboard.css'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, LineController, BarController, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { useEffect, useRef, useState } from 'react';
-import { Chart, Line, } from 'react-chartjs-2';
+import { useEffect, useState } from 'react';
+import { Line, } from 'react-chartjs-2';
 import { db } from '../config/FirebaseConfig';
 ChartJS.register(
     CategoryScale,

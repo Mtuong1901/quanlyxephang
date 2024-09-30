@@ -7,8 +7,8 @@ import Login from './Login/login';
 import React from 'react'; // Import React để dùng React.ReactNode
 import Forgotpass from './Login/forgotpass/forgotpass';
 import Resetpassword from './Login/resetpass/resetpass';
+import Device from './Device/device';
 
-// Định nghĩa kiểu cho props, đặc biệt là kiểu của children
 type MainLayoutProps = {
   children: React.ReactNode;
 };
@@ -28,7 +28,18 @@ function MainLayout({ children }: MainLayoutProps) {
     </div>
   );
 }
-
+function SubLayout({ children }: MainLayoutProps) {
+  return (
+    <div className='app-container'>
+      <div className='left-navbar'>
+        <LeftNav />
+      </div>
+      <div className='main'>
+        {children}
+      </div>
+    </div>
+  );
+}
 function App() {
   return (
     <Router>
@@ -37,8 +48,13 @@ function App() {
         
         <Route path="/dashboard" element={
           <MainLayout>
-            <Dashboard />
+            <Dashboard/>
           </MainLayout>
+        } />
+        <Route path="/device" element={
+          <SubLayout>
+            <Device/>
+          </SubLayout>
         } />
         <Route path="/login" element={<Login />} />
         <Route path="/login/quenmatkhau" element={<Forgotpass/>} />

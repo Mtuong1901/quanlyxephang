@@ -81,7 +81,7 @@ const Calendar: React.FC = () => {
                     &gt;
                 </button>
             </div>
-            <table>
+            <table className='calendar-table'>
                 <thead>
                     <tr>
                         {daysOfWeek.map((day, index) => (
