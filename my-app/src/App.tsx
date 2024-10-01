@@ -8,6 +8,8 @@ import React from 'react'; // Import React để dùng React.ReactNode
 import Forgotpass from './Login/forgotpass/forgotpass';
 import Resetpassword from './Login/resetpass/resetpass';
 import Device from './Device/device';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -42,6 +44,7 @@ function SubLayout({ children }: MainLayoutProps) {
 }
 function App() {
   return (
+    
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />

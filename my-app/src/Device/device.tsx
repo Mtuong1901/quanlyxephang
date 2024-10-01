@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './device.css'
+import { DeviceList } from '../component/deviceList';
 
 const Device = () => {
     const [showStatus, setShowStatus] = useState(false);
@@ -71,7 +72,9 @@ const Device = () => {
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <DeviceList/>
+                        {/* <tbody>
+                            
                             <tr>
                                 <td>Kio_01</td>
                                 <td>kiosk</td>
@@ -82,7 +85,7 @@ const Device = () => {
                                 <td>Chi tiet</td>
                                 <td>Cap nhat</td>
                             </tr>
-                        </tbody>
+                        </tbody> */}
                     </table>
 
                     <div className='de-aside-btn'>
