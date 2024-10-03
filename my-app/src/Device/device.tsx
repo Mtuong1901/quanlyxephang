@@ -7,10 +7,9 @@ const Device = () => {
     const [showConnection, setShowConnection] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState("Tat ca");
     const [selectedConnection, setSelectedConnection] = useState("Tat ca");
-
     return (
         <>
-            <div className="container">
+            <div className="de-container">
                 <div className="de-header">
                     <p style={{ color: '#7E7D88' }}>Thiet bi <span style={{ color: '#FF7506' }}>Danh sach thiet bi</span></p>
                     <h2 className="de-title">Danh sach thiet bi</h2>
@@ -72,26 +71,14 @@ const Device = () => {
                                 <th></th>
                             </tr>
                         </thead>
-                        <DeviceList/>
-                        {/* <tbody>
-                            
-                            <tr>
-                                <td>Kio_01</td>
-                                <td>kiosk</td>
-                                <td>190.902.099</td>
-                                <td>Ngung hoat dong</td>
-                                <td>Mat ket noi</td>
-                                <td>Kham tim mach, kham mat ...</td>
-                                <td>Chi tiet</td>
-                                <td>Cap nhat</td>
-                            </tr>
-                        </tbody> */}
+                        <DeviceList />
+                        
                     </table>
 
                     <div className='de-aside-btn'>
                         <button className='de-add-btn'>
                             <div className='plus-icon'>
-                            <i className="fa-solid fa-plus"></i>
+                                <i className="fa-solid fa-plus"></i>
                             </div>
                             <p>Them thiet bi</p>
                         </button>
