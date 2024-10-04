@@ -57,35 +57,23 @@ const Calendar: React.FC = () => {
     moment.locale('en');
     const currentDay = moment();
     const formattedDate = currentDay.format('DD MMM YYYY');
-    const titleStype: React.CSSProperties ={
-        color : '#FF7506',
-        fontSize: '16px',
-        fontWeight: '700',
-        padding: '10px',
-        marginBottom: '8px',
-        lineHeight: '21.82px',
-    }
-    const headerStyle:React.CSSProperties ={
-        borderBottom: '1px solid #DCDDFD',
-        borderWidth : '90%',
-}
     return (
-        <div className='calendar-container'>
-        <div className="calendar">
-            <div className="calendar-header" style={headerStyle}>
-                <button className="prev-month" onClick={handlePrevMonth}>
+        <div className='calendar-container bg-white w-[353px] h-[256px] mt-[14px] ml-[24px] rounded-xl shadow-lg'>
+        <div className="calendar w-[336px] h-[236px] p-[13px]">
+            <div className="calendar-header flex items-center border-b-[1px] justify-around border-[#DCDDFD] h-[40px]">
+                <button className="prev-month w-[40px] h-[40px] text-[#FF7506] font-bold" onClick={handlePrevMonth}>
                     &lt;
                 </button>
-                <span className="month-year" style={titleStype}>{formattedDate}</span>
-                <button className="next-month" onClick={handleNextMonth}>
+                <span className="month-year text-[#FF7506] text-[16px] font-bold">{formattedDate}</span>
+                <button className="next-month w-[40px] h-[40px] text-[#FF7506] font-bold" onClick={handleNextMonth}>
                     &gt;
                 </button>
             </div>
-            <table className='calendar-table'>
-                <thead>
+            <table className='calendar-table w-full'>
+                <thead className='text-[#FF9138] font-bold'>
                     <tr>
                         {daysOfWeek.map((day, index) => (
-                            <th key={index}>{day}</th>
+                            <th className='w-[36px] h-[36px]' key={index}>{day}</th>
                         ))}
                     </tr>
                 </thead>
@@ -93,7 +81,7 @@ const Calendar: React.FC = () => {
                     {Array(5)
                         .fill(null)
                         .map((_, weekIndex) => (
-                            <tr key={weekIndex}>
+                            <tr className='w-[36px] h-[32px]' key={weekIndex}>
                                 {daysInMonth
                                     .slice(weekIndex * 7, weekIndex * 7 + 7)
                                     .map((day, dayIndex) => {
