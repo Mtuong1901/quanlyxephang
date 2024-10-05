@@ -66,10 +66,7 @@ const Dashboard = () => {
     }, [timeFrame]);
     return (
         <>
-            <div className="d-container">
-                <div className="router-location">
-                    <p>Dashboard</p>
-                </div>
+            <div className="d-container mt-[40px]">
                 <div className="d-section">
                     <p className="d-title">Biểu đồ cấp só</p>
                     <div className="d-figure">

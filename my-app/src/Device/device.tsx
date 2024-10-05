@@ -9,7 +9,7 @@ const Device = () => {
     const [selectedConnection, setSelectedConnection] = useState("Tat ca");
     return (
         <>
-            
+            <div>Hell device</div>
         </>
     );
 };

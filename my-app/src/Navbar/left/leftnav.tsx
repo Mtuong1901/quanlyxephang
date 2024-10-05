@@ -33,7 +33,7 @@ const LeftNav = () => {
                     </a>
                 </li>
                 <li>
-                    <a href="#dich-vu">
+                    <a href="/service">
                         <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="4.58004" cy="14.4026" r="0.708276" fill="#A9A9B0" />
                             <circle cx="6.94094" cy="14.4016" r="0.708276" fill="#A9A9B0" />

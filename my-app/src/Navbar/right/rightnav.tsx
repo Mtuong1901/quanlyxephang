@@ -1,18 +1,43 @@
 import Calendar from '../../component/calendar';
-import './rigth.css'
 const RightNav = () => {
     return (
         <>
-            <div className='r-title'>
-                
-                <div className='figure'>
-                    <a href="#">
-                        {/* device section */}
-                        
-                        {/* service section */}
-                        <div className='service'>
-                            <img src="./images/tron2.png" alt="service" />
-                            <p className='number'>4.221</p>
+            <div className=" right bg-white w-[401px] h-[615px] mt-[84px] position-relative">
+                <p className='text-[#FF7506] text-[24px] font-bold ml-[24px] mt-[12px]'>Tổng quan</p>
+                {/* device */}
+                <div className='device flex items-center border-1 bg-white mt-[14px] w-[353px] h-[83px] ml-[24px] rounded-lg shadow-2xl p-1'>
+                    <img className='w-[60px] h-[60px] ml-[16px] mr-[12px] mt-0 mb-0' src="./images/tron1.png" alt="Device" />
+                    <div className='flex flex-col ml-[12px]' >
+                        <p className='number text-[#535261] font-bold text-[24px]'>4.221</p>
+                        <div className='flex flex-grow-0 items-center gap-1'>
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.75663 1.16699H10.2375C12.3141 1.16699 12.8333 1.68616 12.8333 3.75699V7.44949C12.8333 9.52616 12.3141 10.0395 10.2433 10.0395H3.75663C1.68579 10.0453 1.16663 9.52616 1.16663 7.45533V3.75699C1.16663 1.68616 1.68579 1.16699 3.75663 1.16699Z" stroke="#FF7506" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M7 10.0449V12.8333" stroke="#FF7506" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1.16663 7.58301H12.8333" stroke="#FF7506" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4.375 12.833H9.625" stroke="#FF7506" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p className='text-[#FF7506]'>Thiết bị</p>
+                        </div>
+                    </div>
+                    <div className='ml-[37px] mt-2'>
+                        <ul className='mb-[5px] flex items-center gap-2 '>
+                            <li className='font-[400] text-[12px]  mb-2 list-disc text-[#FFD130]'><span className='text-[#7E7D88]'>Đang hoạt động </span></li><p className='text-[14px] text-[#FF7506] mb-2 p-0 font-bold'>3.799</p>
+                        </ul>
+                        <ul className='mb-[5px] flex  items-center gap-2 list-disc'>
+                            <li className='font-[400] text-[12px]  text-[#7E7D88] mb-2'><span className='text-[#7E7D88]'>Ngưng hoạt động</span></li><p className='text-[14px] text-[#FF7506] mb-2 p-0 font-bold' >422</p>
+                        </ul>
+                        <div>
+
+
+                        </div>
+                    </div>
+                </div>
+                {/* service */}
+                <div className='service flex items-center border-1 bg-white mt-[14px] w-[353px] h-[83px] ml-[24px] rounded-lg shadow-2xl p-1'>
+                    <img className='w-[60px] h-[60px] ml-[16px] mr-[12px] mt-0 mb-0' src="./images/tron2.png" alt="service" />
+                    <div className='flex flex-col ml-[12px]' >
+                        <p className='number text-[#535261] font-bold text-[24px]'>4.221</p>
+                        <div className='flex flex-grow-0 items-center gap-1'>
                             <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <ellipse cx="3.22131" cy="10.0817" rx="0.498165" ry="0.495793" fill="#4277FF" />
                                 <ellipse cx="4.88171" cy="10.0817" rx="0.498165" ry="0.495793" fill="#4277FF" />
@@ -29,18 +54,26 @@ const RightNav = () => {
                                     </clipPath>
                                 </defs>
                             </svg>
-                            <p className='s-title'>Dịch vụ</p>
-                            <div className='s-list-active'>
-                                <ul>
-                                    <li className='s-active'><span style={{ color: "#7e7d88" }}>Đang hoạt động </span></li><p className='s-p-active'>3.799</p>
-                                    <li className='s-un-active'><span>Ngưng hoạt động </span></li><p className='s-p-un'>422</p>
-                                </ul>
-                            </div>
+                            <p className='text-[#4277FF]'>Dịch vụ</p>
                         </div>
-                        {/* Number section */}
-                        <div className='number-level'>
-                            <img src="./images/tron3.png" alt="number level" />
-                            <p className='number'>4.221</p>
+                    </div>
+                    <div className='ml-[37px] mt-2 '>
+                        <ul className='mb-[5px] flex items-center gap-2'>
+                            <li className='font-[400] text-[12px] text-[#4277FF] mb-2 list-disc'><span className='text-[#7E7D88]'>Đang hoạt động</span> </li><p className='text-[14px] text-[#4277FF] mb-2 p-0 font-bold'>3.799</p>
+                        </ul>
+                        <ul className='mb-[5px] flex  items-center gap-2 '>
+                            <li className='font-[400] text-[12px]  text-[#7E7D88] mb-2 list-disc'>Ngưng hoạt động</li><p className='text-[14px] text-[#4277FF] mb-2 p-0 font-bold' >422</p>
+                        </ul>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                {/* capso */}
+                <div className='service flex items-center border-1 bg-white mt-[14px] w-[353px] h-[83px] ml-[24px] rounded-lg shadow-2xl p-1'>
+                    <img className='w-[60px] h-[60px] ml-[16px] mr-[12px] mt-0 mb-0' src="./images/tron2.png" alt="service" />
+                    <div className='flex flex-col ml-[12px]' >
+                        <p className='number text-[#535261] font-bold text-[24px]'>4.221</p>
+                        <div className='flex flex-grow-0 items-center gap-1'>
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_233_8368)">
                                     <path d="M1.16675 9.91699L7.00008 12.8337L12.8334 9.91699" stroke="#35C75A" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round" />
@@ -53,18 +86,25 @@ const RightNav = () => {
                                     </clipPath>
                                 </defs>
                             </svg>
-
-                            <p className='n-title'>Cấp số</p>
-                            <div className='n-list-active'>
-                                <ul>
-                                    <li className='n-active'><span style={{ color: "#7e7d88" }}>Đang hoạt động </span></li><p className='n-p-active'>3.799</p>
-                                    <li className='n-un-active'><span>Ngưng hoạt động </span></li><p className='n-p-un'>422</p>
-                                    <li className='n-skip'><span style={{ color: "#7e7d88" }}>Bỏ qua </span></li><p className='n-p-skip'>32</p>
-                                </ul>
-                            </div>
+                            <p className='text-[#35C75A]'>Cấp số </p>
                         </div>
-                    </a>
+                    </div>
+                    <div className='ml-[37px] mt-2'>
+                        <ul className=' flex items-center gap-2'>
+                            <li className='font-[400] text-[12px] text-[#35C75A]   mb-1 list-disc'><span className='text-[#7E7D88]'>Đang hoạt động </span></li><p className='text-[14px] text-[#35C75A] mb-1 p-0 font-bold'>3.799</p>
+                        </ul>
+                        <ul className=' flex  items-center gap-2'>
+                            <li className='font-[400] text-[12px]  text-[#7E7D88] mb-1 list-disc'>Ngưng hoạt động</li><p className='text-[14px] text-[#35C75A] mb-1 p-0 font-bold' >422</p>
+                        </ul>
+                        <ul className=' flex  items-center gap-2'>
+                            <li className='font-[400] text-[12px] text-[#F178B6] mb-1 list-disc'><span className='text-[#7E7D88]'>Bỏ qua</span></li><p className='text-[14px] text-[#35C75A] mb-1 p-0 font-bold' >422</p>
+                        </ul>
+                        <div>
+                        </div>
+                    </div>
                 </div>
+                {/* Calendar */}
+                <Calendar />
             </div>
         </>
     )
