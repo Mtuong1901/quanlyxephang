@@ -7,6 +7,9 @@ import Dashboard from './Dashboard/dashboard';
 import Login from './Login/login';
 import Device from './Device/device';
 import { Service } from './Service/service';
+import { Update } from './Device/update/update';
+import { Add } from './Device/addDevice/add';
+import { Detail } from './Device/detail/detail';
 
 // Tạo MainLayout component
 const MainLayout = () => {
@@ -59,11 +62,14 @@ export const App = () => {
           <Route index element={<Dashboard />} /> 
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
-        <Route path="/device" element={<Sublayout />} >
-        <Route path="/device" element={<Device/>} />
+        <Route path="/thietbi" element={<Sublayout />} >
+        <Route path="/thietbi" element={<Device/>} />
+        <Route path="/thietbi/chitiet" element={<Detail/>} />
+        <Route path="/thietbi/capnhat" element={<Update/>} />
+        <Route path="/thietbi/themthietbi" element={<Add/>} />
         </Route>
-        <Route path="/service" element={<Sublayout />} >
-        <Route path="/service" element={<Service/>} />
+        <Route path="/dichvu" element={<Sublayout />} >
+        <Route path="/dichvu" element={<Service/>} />
         </Route>
       </Routes>
     </Router>

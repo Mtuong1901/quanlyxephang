@@ -33,12 +33,6 @@ img {
     transition: background-color 0.3s, color 0.3s; 
 }
 
-.nav-link a:focus,
-.nav-link a:active {
-    color: #ffffff;
-    background-color: #ff7506;
-}
-
 .nav-link a:hover {
     color: #ff7506;
     background-color: #fff2e7; 
@@ -54,7 +48,10 @@ img {
 .nav-link a:hover svg path {
     stroke: #ff7506;
 }
-
+.nav-link .active:hover{
+    background-color: unset;
+    color: unset;
+}
 .logout {
     
     width: 200px;

@@ -13,14 +13,14 @@ export const DeviceList = () => {
         dispatch(FetchDevice());
     }, [dispatch]);
     
-    const [expandedIds, setExpandedIds] = useState<string[]>([]); // Đổi thành mảng string
+    const [expandedIds, setExpandedIds] = useState<string[]>([]); 
     const toggleExpand = (id: string) => {
         setExpandedIds((prev) => 
             prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
         );
     };
 
-    const MAX_LENGTH = 70; // Độ dài tối đa của văn bản hiển thị
+    const MAX_LENGTH = 30;
 
     return (
         <tbody>
@@ -35,7 +35,6 @@ export const DeviceList = () => {
                         <td>{device.status}</td>
                         <td>{device.connect_status}</td>
                         <td>
-                            {/* Hiển thị dịch vụ với chức năng "Xem thêm" */}
                             {expandedIds.includes(device.id) ? (
                                 device.services.join(', ')
                             ) : (
@@ -43,13 +42,13 @@ export const DeviceList = () => {
                                 (device.services.join(', ').length > MAX_LENGTH ? '...' : '')
                             )}
                             {device.services.join(', ').length > MAX_LENGTH && (
-                                <Link to='#' onClick={() => toggleExpand(device.id)}>
+                                <Link className="underline text-[#4277FF]" to='#' onClick={() => toggleExpand(device.id)}>
                                     {expandedIds.includes(device.id) ? 'Xem ít' : 'Xem thêm'}
                                 </Link>
                             )}
                         </td>
-                        <td>chi tiet</td>
-                        <td>cap nhat</td>
+                        <td className="underline text-[#4277FF]"><Link to='/thietbi/chitiet'>Chi tiết</Link></td>
+                        <td className="underline text-[#4277FF]"><Link to='/thietbi/capnhat'>Cập nhật</Link></td>
                     </tr>
                 ))
             )}
