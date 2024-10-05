@@ -19,7 +19,7 @@ const MainLayout = () => {
         <Header />
         <div className="main flex font-[Nunito]">
           <div className="bg-[#F6F6F6] w-[935px] h-screen">
-            <div className="mt-[84px] ml-[24px]">
+            <div className="mt-[84px]">
               <Outlet />
             </div>
           </div>
