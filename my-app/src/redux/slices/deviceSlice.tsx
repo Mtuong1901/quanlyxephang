@@ -32,7 +32,6 @@ export const FetchDevice = createAsyncThunk('device/fetchDevice', async () => {
     return deviceList;
 });
 
-// Fetch one device by ID
 export const FetchOneDevice = createAsyncThunk(
     'device/fetchOneDevice',
     async (id: string) => {
@@ -43,7 +42,6 @@ export const FetchOneDevice = createAsyncThunk(
         }
         
         return {
-            id: deviceDoc.id,
             idDevice: deviceDoc.data().idDevice || '',
             name: deviceDoc.data().name,
             username: deviceDoc.data().username,
