@@ -28,26 +28,26 @@ export const DeviceList = () => {
             {status === 'failed' && <tr><td colSpan={8}>Error: {error}</td></tr>}
             {status === 'succeeded' && (
                 devices.map((device) => (
-                    <tr key={device.id}>
+                    <tr key={device.idDevice}>
                         <td>{device.idDevice}</td>
                         <td>{device.name}</td>
                         <td>{device.ip}</td>
                         <td>{device.status}</td>
                         <td>{device.connect_status}</td>
                         <td>
-                            {expandedIds.includes(device.id) ? (
+                            {expandedIds.includes(device.idDevice) ? (
                                 device.services.join(', ')
                             ) : (
                                 device.services.join(', ').substring(0, MAX_LENGTH) + 
                                 (device.services.join(', ').length > MAX_LENGTH ? '...' : '')
                             )}
                             {device.services.join(', ').length > MAX_LENGTH && (
-                                <Link className="underline text-[#4277FF]" to='#' onClick={() => toggleExpand(device.id)}>
-                                    {expandedIds.includes(device.id) ? 'Xem ít' : 'Xem thêm'}
+                                <Link className="underline text-[#4277FF]" to='#' onClick={() => toggleExpand(device.idDevice)}>
+                                    {expandedIds.includes(device.idDevice) ? 'Xem ít' : 'Xem thêm'}
                                 </Link>
                             )}
                         </td>
-                        <td className="underline text-[#4277FF]"><Link to='/thietbi/chitiet'>Chi tiết</Link></td>
+                        <td className="underline text-[#4277FF]"><Link to={`/thietbi/chitiet/${device.idDevice}`}>Chi tiết</Link></td>
                         <td className="underline text-[#4277FF]"><Link to='/thietbi/capnhat'>Cập nhật</Link></td>
                     </tr>
                 ))
