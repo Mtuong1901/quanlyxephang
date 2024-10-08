@@ -13,6 +13,7 @@ export const Detail = () => {
     useEffect(() => {
         if (id) {
             dispatch(FetchOneDevice(id));
+            console.log('Fetched device:', devices);
         }
     }, [dispatch, id]);
 
@@ -30,11 +31,11 @@ export const Detail = () => {
                                         Mã thiết bị: <span className="ml-[43px] text-[#535261] text-[16px] font-[400] leading-[24px]">{device?.idDevice}</span>
                                     </p>
                                 </div>
-                                {/* <div>
+                                <div>
                                     <p className="text-[#282739] text-[16px] font-[600] leading-[24px]" >
                                         Loại thiết bị: <span className="ml-[43px] text-[#535261] text-[16px] font-[400] leading-[24px]">{device?.type}</span>
                                     </p>
-                                </div> */}
+                                </div>
                             </div>
                             <div className=" ml-[24px] flex gap-[366px] mb-[16px]">
                                 <div className="w-[220px] h-[24px]">

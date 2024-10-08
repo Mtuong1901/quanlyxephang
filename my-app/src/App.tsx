@@ -65,7 +65,7 @@ export const App = () => {
         <Route path="/thietbi" element={<Sublayout />} >
         <Route path="/thietbi" element={<Device/>} />
         <Route path="/thietbi/chitiet/:id" element={<Detail/>} />
-        <Route path="/thietbi/capnhat" element={<Update/>} />
+        <Route path="/thietbi/capnhat/:id" element={<Update/>} />
         <Route path="/thietbi/themthietbi" element={<Add/>} />
         </Route>
         <Route path="/dichvu" element={<Sublayout />} >

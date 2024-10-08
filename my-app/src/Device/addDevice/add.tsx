@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addDevice } from "../../redux/slices/deviceSlice";
 import { useDispatch } from "react-redux";
 import { Idevice } from "../../Idevice";
 import { AppDispatch } from "../../redux/store";
 
 export const Add = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const [dropdown, setDropdown] = useState(false);
+    const [type, setType] = useState('');
     const [form, setForm] = useState<Idevice>({
         idDevice: '',
         name: '',
         username: '',
         password: '',
+        type: '',
         ip: '',
         status: 'Hoạt động',
         connect_status: 'Kết nối',
@@ -21,7 +25,7 @@ export const Add = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         if (name === "services") {
-            
+
             const servicesArray = value.split(',');
             setForm({
                 ...form,
@@ -30,25 +34,31 @@ export const Add = () => {
         } else {
             setForm({
                 ...form,
-                [name]: value, 
+                [name]: value,
             });
         }
+    };
+    const handleTypeChange = (selectedType: string) => {
+        setType(selectedType);
+        setForm(prevForm => ({ ...prevForm, type: selectedType })); // Cập nhật type vào form
+        setDropdown(false); // Đóng dropdown
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const deviceData = { ...form };
-        console.log(deviceData);
         try {
             const formAction = await dispatch(addDevice(deviceData));
             if (addDevice.fulfilled.match(formAction)) {
                 console.log('Device added:', formAction.payload);
+                alert('Thêm thiết bị thành công');
+                navigate('/thietbi');
             }
         } catch (error) {
             console.error(error);
         }
     };
-    
+
     return (
         <div className="container">
             <p className="text-[24px] text-[#FF7506] font-bold leading-[30px]">Quản lý thiết bị</p>
@@ -71,17 +81,23 @@ export const Add = () => {
                                 />
                             </div>
                             <div className="w-[540px] h-[76px]">
-                                <label className="text-[#282739] text-[16px] font-[600] leading-[24px]" htmlFor="deviceType">Loại thiết bị: <span className="text-[#FF4747]">*</span></label><br />
-                                <select
-                                    className="w-[540px] h-[44px] border-[1px] rounded-lg p-2 mt-1"
-                                    name="deviceType"
-                                    id="deviceType"
-                                    required
-                                >
-                                    <option value="">Chọn loại thiết bị</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
+                                <label className="text-[#282739] text-[16px] font-[600] leading-[24px]" htmlFor="deviceType">
+                                    Loại thiết bị: <span className="text-[#FF4747]">*</span>
+                                </label>
+                                <br />
+                                <div className={`w-[540px] h-[44px] border-[1px] rounded-lg mt-1 cursor-pointer relative ${dropdown ? "border-[#FFAC6A]" :""}`} onClick={() => setDropdown(!dropdown)}>
+                                    {type ? (
+                                        <p className="text-[#282739] text-[16px] leading-[24px] font-[400] p-2">{type}</p>
+                                    ) : (
+                                        <p className="text-[#282739] text-[16px] leading-[24px] font-[400] p-2" >Chọn loại thiết bị</p>
+                                    )}
+                                    {dropdown && (
+                                        <ul className="w-full bg-white border-[1px] absolute ml-0 rounded-lg pt-1 pb-1 mt-1">
+                                            <li className={` h-[44px] p-2 text-[#282739] text-[16px] leading-[24px] font-[400] ${type === 'Kiosk' ? "bg-[#FFF2E7]" :""}`} onClick={() => handleTypeChange('Kiosk')}>Kiosk</li>
+                                            <li className={` h-[44px] p-2 text-[#282739] text-[16px] leading-[24px] font-[400] ${type === 'Display Counter' ? "bg-[#FFF2E7]" :""}`} onClick={() => handleTypeChange('Display Counter')}>Display Counter</li>
+                                        </ul>
+                                    )}
+                                </div>
                             </div>
                         </div>
                         <div className="flex ml-[24px] gap-[104px] mb-[16px]">

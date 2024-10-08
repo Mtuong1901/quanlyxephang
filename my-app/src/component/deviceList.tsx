@@ -48,7 +48,7 @@ export const DeviceList = () => {
                             )}
                         </td>
                         <td className="underline text-[#4277FF]"><Link to={`/thietbi/chitiet/${device.idDevice}`}>Chi tiết</Link></td>
-                        <td className="underline text-[#4277FF]"><Link to='/thietbi/capnhat'>Cập nhật</Link></td>
+                        <td className="underline text-[#4277FF]"><Link to={`/thietbi/capnhat/${device.idDevice}`}>Cập nhật</Link></td>
                     </tr>
                 ))
             )}
