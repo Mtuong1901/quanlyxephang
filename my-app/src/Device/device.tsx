@@ -2,6 +2,9 @@ import { useState } from 'react';
 import './device.css'
 import { DeviceList } from '../component/deviceList';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+
 
 const Device = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -9,6 +12,14 @@ const Device = () => {
     const [showConnection, setShowConnection] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState("Tất cả");
     const [selectedConnection, setSelectedConnection] = useState("Tất cả");
+    const { devices, status, error } = useSelector((state: RootState) => state.device);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(8);
+    const indexOfLastDevice = currentPage * itemsPerPage;
+    const indexOfFirstDevice = indexOfLastDevice - itemsPerPage;
+    const currentDevices = devices.slice(indexOfFirstDevice, indexOfLastDevice);
+    const totalPages = Math.ceil(devices.length / itemsPerPage);
+
     return (
         <>
             <div className="de-container">
@@ -50,7 +61,7 @@ const Device = () => {
                     <div className="de-search">
                         <p className='sl-box-title'>Từ khóa</p>
                         <div className='search'>
-                            <input type="text" placeholder="nhập từ khóa" onChange={(e) =>setSearchTerm(e.target.value)} />
+                            <input type="text" placeholder="nhập từ khóa" onChange={(e) => setSearchTerm(e.target.value)} />
                             <i className="fa-solid fa-magnifying-glass"></i>
                         </div>
                     </div>
@@ -69,20 +80,46 @@ const Device = () => {
                                 <th className='w-[82px]'></th>
                             </tr>
                         </thead>
-                        <DeviceList selectedStatus={selectedStatus} selectedConnection={selectedConnection} searchTerm={searchTerm} />
-                        
+                        <DeviceList selectedStatus={selectedStatus} selectedConnection={selectedConnection} searchTerm={searchTerm} currentDevices={currentDevices} />
                     </table>
                     <div className='de-aside-btn'>
                         <Link to="/thietbi/themthietbi">
-                        <button className='de-add-btn'>
-                            <div className='plus-icon'>
-                                <i className="fa-solid fa-plus"></i>
-                            </div>
-                            <p>Thêm thiết bị</p>
-                        </button>
+                            <button className='de-add-btn'>
+                                <div className='plus-icon'>
+                                    <i className="fa-solid fa-plus"></i>
+                                </div>
+                                <p>Thêm thiết bị</p>
+                            </button>
                         </Link>
                     </div>
                 </div>
+                <div className='phanpage flex justify-end mr-[110px] mt-[24px] gap-2 '>
+                    <button
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className={`page-button h-[32px] ${currentPage === 1 ? "text-[#A9A9B0]" : ""} `}
+                    >
+                        <i className="fa-solid fa-caret-left"></i>
+                    </button>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index + 1}
+                            onClick={() => setCurrentPage(index + 1)}
+                            className={`page-button ${currentPage === index + 1 ? 'active bg-[#FF7506] text-white rounded-md' : ''} w-[32px] h-[32px]` }
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    
+                    <button
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className={`page-button h-[32px] ${currentPage === totalPages ? "text-[#A9A9B0]" : ""} `}
+                    >
+                        <i className="fa-solid fa-caret-right"></i>
+                    </button>
+                </div>
+
             </div>
         </>
     );

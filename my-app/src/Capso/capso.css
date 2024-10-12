@@ -1,0 +1,10 @@
+/* Đặt trong file CSS của bạn */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px; 
+    height: 5px
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #FFC89B; 
+    border-radius: 4px;
+  }
