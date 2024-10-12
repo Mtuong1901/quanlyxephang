@@ -10,6 +10,12 @@ import { Service } from './Service/service';
 import { Update } from './Device/update/update';
 import { Add } from './Device/addDevice/add';
 import { Detail } from './Device/detail/detail';
+import { ServiceDetail } from './Service/detail/detail';
+import { AddService } from './Service/add/addService';
+import { UpService } from './Service/update/upService';
+import { Capso } from './Capso/capso';
+import { BaoCao } from './Report/baocao';
+import { Profile } from './profile/profile';
 
 // Tạo MainLayout component
 const MainLayout = () => {
@@ -58,6 +64,9 @@ export const App = () => {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} /> 
+        <Route path='/thongtincanhan/:id'element={<Sublayout/>}>
+        <Route path='/thongtincanhan/:id' element={<Profile/>}/>
+        </Route>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} /> 
           <Route path="dashboard" element={<Dashboard />} />
@@ -68,8 +77,20 @@ export const App = () => {
         <Route path="/thietbi/capnhat/:id" element={<Update/>} />
         <Route path="/thietbi/themthietbi" element={<Add/>} />
         </Route>
+        {/* service */}
         <Route path="/dichvu" element={<Sublayout />} >
         <Route path="/dichvu" element={<Service/>} />
+        <Route path='/dichvu/chitiet/:id' element={<ServiceDetail/>}/>
+        <Route path='/dichvu/themdichvu' element={<AddService/>}/>
+        <Route path='/dichvu/capnhat/:id' element={<UpService/>} />
+        </Route>
+        {/* capsoRouter */}
+        <Route path='/capso' element={<Sublayout/>}>
+        <Route path='/capso' element={<Capso/>} />
+        </Route>
+        {/* baocaoRouter */}
+        <Route path='/baocao' element={<Sublayout/>}>
+        <Route path='/baocao' element={<BaoCao/>} />
         </Route>
       </Routes>
     </Router>

@@ -4,6 +4,7 @@ import { DeviceList } from '../component/deviceList';
 import { Link } from 'react-router-dom';
 
 const Device = () => {
+    const [searchTerm, setSearchTerm] = useState("");
     const [showStatus, setShowStatus] = useState(false);
     const [showConnection, setShowConnection] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState("Tất cả");
@@ -39,9 +40,9 @@ const Device = () => {
                         {showConnection && (
                             <div className='selected  rounded-lg'>
                                 <ul className='flex flex-col'>
-                                    <li onClick={() => { setSelectedConnection('Tat ca'); setShowConnection(false); }}><p className='ml-2 mt-2 text-[#535261] text-[16px]'>Tất cả</p></li>
-                                    <li onClick={() => { setSelectedConnection('Ket noi'); setShowConnection(false); }}><p className='ml-2 mt-2 text-[#535261] text-[16px]'>Kết nối</p></li>
-                                    <li onClick={() => { setSelectedConnection('Mat ket noi'); setShowConnection(false); }}><p className='ml-2 mt-2 text-[#535261] text-[16px]'>Mất kết nối</p></li>
+                                    <li onClick={() => { setSelectedConnection('Tất cả'); setShowConnection(false); }}><p className='ml-2 mt-2 text-[#535261] text-[16px]'>Tất cả</p></li>
+                                    <li onClick={() => { setSelectedConnection('Kết nối'); setShowConnection(false); }}><p className='ml-2 mt-2 text-[#535261] text-[16px]'>Kết nối</p></li>
+                                    <li onClick={() => { setSelectedConnection('Mất kết nối'); setShowConnection(false); }}><p className='ml-2 mt-2 text-[#535261] text-[16px]'>Mất kết nối</p></li>
                                 </ul>
                             </div>
                         )}
@@ -49,7 +50,7 @@ const Device = () => {
                     <div className="de-search">
                         <p className='sl-box-title'>Từ khóa</p>
                         <div className='search'>
-                            <input type="text" placeholder="nhập từ khóa" />
+                            <input type="text" placeholder="nhập từ khóa" onChange={(e) =>setSearchTerm(e.target.value)} />
                             <i className="fa-solid fa-magnifying-glass"></i>
                         </div>
                     </div>
@@ -68,7 +69,7 @@ const Device = () => {
                                 <th className='w-[82px]'></th>
                             </tr>
                         </thead>
-                        <DeviceList />
+                        <DeviceList selectedStatus={selectedStatus} selectedConnection={selectedConnection} searchTerm={searchTerm} />
                         
                     </table>
                     <div className='de-aside-btn'>
