@@ -49,15 +49,15 @@ export const Service = () => {
                     </div>
                 </div>
                 <div className="de-content">
-                    <table className='de-table'>
-                        <thead className='' style={{ backgroundColor: '#FF9138' }}>
-                            <tr>
-                                <th className='w-[150px]'>Mã dịch vụ</th>
-                                <th className='w-[224px]'>Tên dịch vụ</th>
-                                <th className='w-[230px]'>Mô tả</th>
-                                <th className='w-[253px]'>Trạng thái hoạt động</th>
-                                <th className='w-[125px]'></th>
-                                <th className='w-[125px]'></th>
+                    <table className='w-full rounded-xl bg-[#FF9138]'>
+                    <thead className=" h-[49px] text-[16px] text-white font-bold leading-[24px] text-left">
+                            <tr className="">
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Mã dịch vụ</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Tên dịch vụ</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Mô tả</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Trạng thái hoạt động</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]"></th>
+                                <th className="p-2 "></th>
                             </tr>
                         </thead>
                         <ServiceList/>

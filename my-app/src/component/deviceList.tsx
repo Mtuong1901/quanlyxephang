@@ -39,19 +39,19 @@ export const DeviceList: React.FC<DeviceListProps> = ({ selectedStatus, selected
             {status === "failed" && <tr><td colSpan={8}>Error: {error}</td></tr>}
             {status === "succeeded" && (
                 filteredDevices.map((device) => (
-                    <tr key={device.idDevice}>
-                        <td>{device.idDevice}</td>
-                        <td>{device.name}</td>
-                        <td>{device.ip}</td>
-                        <td>
+                    <tr className="text-[#535261] text-[14px] font-[400] leading-21 h-[49px] odd:bg-white even:bg-[#FFF2E7]" key={device.idDevice}>
+                        <td className="p-2 border-r-[2px] border-[#FFE3CD]">{device.idDevice}</td>
+                        <td className="p-2 border-r-[2px] border-[#FFE3CD]">{device.name}</td>
+                        <td className="p-2 border-r-[2px] border-[#FFE3CD]">{device.ip}</td>
+                        <td className="p-2 border-r-[2px] border-[#FFE3CD]">
                             <button className={`w-[8px] h-[8px] ${device.status === "Hoạt động" ? "bg-[#34CD26]" : "bg-[#EC3740]"} rounded-lg mr-2`}></button>
                             {device.status}
                         </td>
-                        <td>
+                        <td className="p-2 border-r-[2px] border-[#FFE3CD]">
                             <button className={`w-[8px] h-[8px] ${device.connect_status === "Kết nối" ? "bg-[#34CD26]" : "bg-[#EC3740]"} rounded-lg mr-2`}></button>
                             {device.connect_status}
                         </td>
-                        <td>
+                        <td className="p-2 border-r-[2px] border-[#FFE3CD]">
                             {expandedIds.includes(device.idDevice) ? (
                                 device.services.join(", ")
                             ) : (
@@ -64,10 +64,10 @@ export const DeviceList: React.FC<DeviceListProps> = ({ selectedStatus, selected
                                 </Link>
                             )}
                         </td>
-                        <td className="underline text-[#4277FF]">
+                        <td className="underline text-[#4277FF] p-2 border-r-[2px] border-[#FFE3CD]">
                             <Link to={`/thietbi/chitiet/${device.idDevice}`}>Chi tiết</Link>
                         </td>
-                        <td className="underline text-[#4277FF]">
+                        <td className="underline text-[#4277FF] p-2">
                             <Link to={`/thietbi/capnhat/${device.idDevice}`}>Cập nhật</Link>
                         </td>
                     </tr>

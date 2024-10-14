@@ -19,16 +19,16 @@ export const ServiceList = () => {
             {status === 'failed' && <tr><td colSpan={8}>Error: {error}</td></tr>}
             {status === 'succeeded' && (
                 services.map((service) => (
-                    <tr key={service.idService}>
-                        <td>{service.idService}</td>
-                        <td>{service.name}</td>
-                        <td>{service.description}</td>
-                        <td className="flex items-center">
+                    <tr className="text-[#535261] text-[14px] font-[400] leading-21 h-[49px] odd:bg-white even:bg-[#FFF2E7]" key={service.idService}>
+                        <td className="p-2 border-r-[2px] border-[#FFE3CD]">{service.idService}</td>
+                        <td className="p-2 border-r-[2px] border-[#FFE3CD]">{service.name}</td>
+                        <td className="p-2 border-r-[2px] border-[#FFE3CD]">{service.description}</td>
+                        <td className="flex items-center p-2 border-r-[2px] border-[#FFE3CD]">
                         <span className={`${service.status === "Hoạt động" ? "bg-green-500":"bg-red-500"} w-[8px] h-[8px] rounded-2xl m-2`}></span>
                         {service.status}
                         </td>
-                        <td className="underline text-[#4277FF]"><Link to={`/dichvu/chitiet/${service.idService}`}>Chi tiết</Link></td>
-                        <td className="underline text-[#4277FF]"><Link to={`/dichvu/capnhat/${service.idService}`}>Cập nhật</Link></td>
+                        <td className="underline text-[#4277FF] p-2 border-r-[2px] border-[#FFE3CD]"><Link to={`/dichvu/chitiet/${service.idService}`}>Chi tiết</Link></td>
+                        <td className="underline text-[#4277FF] p-2 border-r-[2px] border-[#FFE3CD]"><Link to={`/dichvu/capnhat/${service.idService}`}>Cập nhật</Link></td>
                     </tr>
                 ))
             )}

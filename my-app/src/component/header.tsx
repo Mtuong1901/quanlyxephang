@@ -12,24 +12,84 @@ export const Header = () => {
     const [router, setRouter] = useState<string | React.ReactNode | null>(null);
 
     const formatRouterPath = (pathname: string) => {
-        if (pathname.includes("/dashboard")) {
-            return "Dashboard";
-        } else if (pathname === "/thietbi") {
-            return (
+        const paths: { [key: string]: JSX.Element | string } = {
+            "/dashboard": "Dashboard",
+            "/": "Dashboard",
+            "/thietbi": (
                 <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
                     Thiết bị <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Danh sách thiết bị</span>
                 </p>
-            );
-        } else if (pathname.includes("/thietbi/themthietbi")) {
+            ),
+            "/dichvu": (
+                <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
+                    Dịch vụ <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Danh sách dịch vụ</span>
+                </p>
+            ),
+            
+            "/capso": (
+                <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
+                    Cấp số <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Danh sách cấp số</span>
+                </p>
+            ),
+            "/baocao": (
+                <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
+                    Báo cáo <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Lập báo cáo</span>
+                </p>
+            ),
+            "/thongtincanhan": (
+                <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
+                    Thông tin cá nhân <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Thông tin các nhân</span>
+                </p>
+            ),
+        };
+    
+        // Kiểm tra các đường dẫn chứa từ khóa nhất định
+        if (pathname.includes("/thietbi/themthietbi")) {
             return (
                 <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
                     Thiết bị <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#7E7D88] text-[20px] font-bold leading-[30px]">Danh sách thiết bị</span>
                     <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Thêm thiết bị</span>
                 </p>
             );
+        } else if (pathname.includes("/thietbi/chitiet")) {
+            return (
+                <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
+                    Thiết bị <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#7E7D88] text-[20px] font-bold leading-[30px]">Danh sách thiết bị</span>
+                    <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Chi tiết thiết bị</span>
+                </p>
+            );
+        } else if (pathname.includes("/thietbi/capnhat")) {
+            return (
+                <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
+                    Thiết bị <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#7E7D88] text-[20px] font-bold leading-[30px]">Danh sách thiết bị</span>
+                    <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Cập nhật thiết bị</span>
+                </p>
+            );
+        } else if (pathname.includes("/dichvu/themdichvu")) {
+            return (
+                <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
+                    Dịch vụ <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Thêm dịch vụ</span>
+                </p>
+            );
         }
-        return pathname;
+        else if (pathname.includes("/capso/capsomoi")) {
+            return (
+                <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
+                    Cấp số <i className="fa-solid fa-chevron-right text-[20px]"></i> <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Cấp số mới</span>
+                </p>
+            );
+        }
+        else if (pathname.includes("thongtincanhan")) {
+            return (
+                <p className='text-[#7E7D88] text-[20px] font-bold leading-[30px]'>
+                <span className="text-[#FF7506] text-[20px] font-bold leading-[30px]">Thông in cá nhân</span>
+                </p>
+            );
+        }
+    
+        return paths[pathname] || pathname;
     };
+    
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');

@@ -4,12 +4,14 @@ import DeviceReducer from './slices/deviceSlice'
 import ServiceReducer from './slices/serviceSlice';
 import UserReducer from './slices/userSlice';
 import AuthReducer from './slices/authSlice';
+import CapsoReducer from './slices/capsoSlice';
 const store = configureStore({
     reducer: {
         device : DeviceReducer,
         service : ServiceReducer,
         user : UserReducer,
         auth : AuthReducer,
+        capso: CapsoReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

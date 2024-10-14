@@ -1,51 +1,39 @@
 import { useState, useEffect } from 'react';
 import './forgotpass.css';
-import { collection, getDocs} from 'firebase/firestore';
-import { db } from '../../config/FirebaseConfig';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { fetchUserByEmail } from '../../redux/slices/userSlice';
 import { Link } from 'react-router-dom';
 
 const Forgotpass = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
-    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+    const [ isEmail, setisEmail] = useState(false);
 
-    const checkEmail = async (email: string) => {
-        const emailCollection = collection(db,'user');
-        const userDoc = await getDocs(emailCollection);
-        const usernap = userDoc.docs.find((doc) => doc.data().email === email);
-        if(usernap !== undefined){
-            const userdata = usernap.data();
-            const userEmail = userdata.email;
-            if(userEmail === email){
-                setMessage('Email đã được đăng ký. Vui lòng kiểm tra email để đặt lại mật khẩu.');
-            }else{
-                setMessage('Email này không tồn tại trong hệ thống.');
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        if (!email) {
+           setisEmail(true);
+            setMessage('Email không được để trống.');
+            return;
+        }
+        
+       setisEmail(false);
+        try {
+            const result = await dispatch(fetchUserByEmail(email)).unwrap();
+            if (result) {
+                setMessage('Email đã được tìm thấy! Vui lòng kiểm tra hộp thư để đặt lại mật khẩu.');
             }
+        } catch (error) {
+            setMessage('Email không tồn tại trong hệ thống.');
         }
     };
 
-    useEffect(() => {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-
-        if (email) {
-            const id = setTimeout(() => {
-                checkEmail(email);
-            }, 2000);
-
-            setTimeoutId(id);
-        }
-
-        return () => {
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-            }
-        };
-    }, [email]);
-    const handleSubmit = (e:any) =>{
-        e.preventDefault();
-        
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+        setisEmail(!e.target.value);
     }
     return (
         <div className='login-container' style={{ backgroundColor: '#F0F0F0' }}>
@@ -55,26 +43,24 @@ const Forgotpass = () => {
                 </div>
                 <div className='login-form'>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="email">Vui lòng nhập email để đặt lại mật khẩu của bạn *</label><br />
+                        <label htmlFor="email">Vui lòng nhập email để đặt lại mật khẩu của bạn <span className='text-red-500'>*</span></label><br />
                         <input 
                             type="email" 
                             name="email" 
                             id="email" 
-                            onChange={(e) => setEmail(e.target.value)} 
-                            required 
+                            onChange={handleEmailChange} 
+                            className={`${isEmail} ? ' ' : '' border-red-200`}
                         />
-                        {message && <p className='message'>{message}</p>}
-                    </form>
-                    <div className='form-btn'>
+                        {message && <p>{message}</p>}
+                        <div className='form-btn'>
                             <Link to='/login' type='button' className='btn-cancel'>Hủy</Link>
-                            <Link to={`/login/resetpassword&email=${email}`} type='submit'  className='btn-continue'>Tiếp tục</Link>
+                            <button type='submit' className='btn-continue'>Tiếp tục</button>
                         </div>
+                    </form>
                 </div>
             </div>
             <div className='for-section-2'>
-                <div className='for-img-background'>
-                    
-                </div>
+                <div className='for-img-background'></div>
             </div>
         </div>
     );

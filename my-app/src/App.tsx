@@ -16,6 +16,8 @@ import { UpService } from './Service/update/upService';
 import { Capso } from './Capso/capso';
 import { BaoCao } from './Report/baocao';
 import { Profile } from './profile/profile';
+import { New } from './Capso/new/new';
+import Forgotpass from './Login/forgotpass/forgotpass';
 
 // Tạo MainLayout component
 const MainLayout = () => {
@@ -63,14 +65,19 @@ export const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} /> 
-        <Route path='/thongtincanhan/:id'element={<Sublayout/>}>
+        {/* login */}
+        <Route path="/login" element={<Login />}/>
+        <Route path='/login/quenmatkhau' element={<Forgotpass/>}/>
+        {/* thngtincanhan */}
+        <Route path='/thongtincanhan/'element={<Sublayout/>}>
         <Route path='/thongtincanhan/:id' element={<Profile/>}/>
         </Route>
+        {/* dashboard */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} /> 
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
+        {/* thietbi */}
         <Route path="/thietbi" element={<Sublayout />} >
         <Route path="/thietbi" element={<Device/>} />
         <Route path="/thietbi/chitiet/:id" element={<Detail/>} />
@@ -87,6 +94,7 @@ export const App = () => {
         {/* capsoRouter */}
         <Route path='/capso' element={<Sublayout/>}>
         <Route path='/capso' element={<Capso/>} />
+        <Route path='/capso/capsomoi' element={<New/>} />
         </Route>
         {/* baocaoRouter */}
         <Route path='/baocao' element={<Sublayout/>}>

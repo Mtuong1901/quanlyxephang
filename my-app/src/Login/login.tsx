@@ -72,7 +72,7 @@ const Login: React.FC = () => {
                                 {...register('password', { required: 'Mật khẩu là bắt buộc' })}
                             />
                             <i
-                                className={`fa-regular ${show ? "fa-eye-slash" : "fa-eye"}`}
+                                className={`fa-regular ${show ? "fa-eye-slash" : "fa-eye"} mt-2`}
                                 onClick={handleShow}
                                 style={{ cursor: 'pointer' }}
                             ></i>

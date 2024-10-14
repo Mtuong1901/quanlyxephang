@@ -67,17 +67,17 @@ const Device = () => {
                     </div>
                 </div>
                 <div className="de-content">
-                    <table className='de-table'>
-                        <thead className='' style={{ backgroundColor: '#FF9138' }}>
-                            <tr>
-                                <th className='w-[120px]'>Mã thiết bị</th>
-                                <th className='w-[130px]'>Tên thiết bị</th>
-                                <th className='w-[110px]'>Địa chỉ IP</th>
-                                <th className='w-[200px]'>Trạng thái hoạt động</th>
-                                <th className='w-[170px]'>Trạng thái kết nối</th>
-                                <th className='w-[300px]'>Dịch vụ sử dụng</th>
-                                <th className='w-[82px]'></th>
-                                <th className='w-[82px]'></th>
+                    <table className="w-full rounded-xl bg-[#FF9138]">
+                    <thead className=" h-[49px] text-[16px] text-white font-bold leading-[24px] text-left">
+                            <tr className="">
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Mã thiết bị</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Tên thiết bị</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Địa chỉ IP</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Trạng thái hoạt động</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Trạng thái kết nối</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Dịch vụ sử dụng</th>
+                                <th className="p-2 border-r-[2px] border-[#FFE3CD]"></th>
+                                <th className="p-2"></th>
                             </tr>
                         </thead>
                         <DeviceList selectedStatus={selectedStatus} selectedConnection={selectedConnection} searchTerm={searchTerm} currentDevices={currentDevices} />

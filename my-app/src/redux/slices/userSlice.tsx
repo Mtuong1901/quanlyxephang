@@ -34,8 +34,26 @@ export const FetchUser = createAsyncThunk('user/fetchUser', async () => {
     })) as Iuser[];
     return userList;
 });
+export const fetchUserByEmail = createAsyncThunk<Iuser, string>(
+    'user/fetchUserByEmail',
+    async (email, { rejectWithValue }) => {
+        try {
+            const user_col = collection(db, 'user');
+            const q = query(user_col, where("email", "==", email));
+            const querySnapshot = await getDocs(q);
 
+            if (querySnapshot.empty) {
+                return rejectWithValue("Email không tồn tại trong hệ thống");
+            }
 
+            const userData = querySnapshot.docs[0].data() as Iuser;
+            return userData;
+        } catch (error) {
+            return rejectWithValue("Đã xảy ra lỗi trong quá trình tìm kiếm email");
+        }
+    }
+);
+// login
 export const loginUser = createAsyncThunk<Iuser, { username: string; password: string }>(
     'user/login',
     async ({ username, password }, { rejectWithValue }) => {
@@ -101,6 +119,18 @@ const userSlice = createSlice({
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Login failed';
+            })
+            .addCase(fetchUserByEmail.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchUserByEmail.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.currentUser = action.payload
+            })
+            .addCase(fetchUserByEmail.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message || 'Không tìm thấy email';
             });
     },
 });

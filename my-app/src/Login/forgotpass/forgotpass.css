@@ -43,3 +43,6 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+.input-error {
+    border: 1px solid red;
+}
