@@ -16,6 +16,7 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             thunk: true,
+            serializableCheck: false,
         }),
 });
 

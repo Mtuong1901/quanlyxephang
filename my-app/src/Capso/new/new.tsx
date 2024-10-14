@@ -6,22 +6,29 @@ import { Link } from "react-router-dom";
 
 export const New = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const [currentNum, setCurNum] = useState(2010001)
     const { numbers, status, error } = useSelector((state: RootState) => state.capso);
+    const [showServiceStatus, setShowServiceStatus] = useState(false);
     const [selectedServiceStatus, setSelectedServiceStatus] = useState("");
     const [modal, setModal] = useState(false);
-
+    const authen_username = useSelector((state: RootState) => state.auth.user)
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (selectedServiceStatus) {
             const newNumber = {
-                idNumber: "",  
                 service_name: selectedServiceStatus,
-                number: [Math.floor(Math.random() * 1000000)], 
+                number: currentNum,
+                cus_name: authen_username?.fullname,
+                status: 'Đang chờ',
+                ngaycap: new Date(),
+                hethan: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+                nguoncap: 'Hệ thống',
             };
 
             dispatch(addNewNumber(newNumber));
             setModal(true);
+            setCurNum(prevNumber => prevNumber + 1);
         }
     };
 
@@ -37,19 +44,26 @@ export const New = () => {
                             <div className="tendichvu w-[400px] h-[72px] flex flex-col gap-1 relative">
                                 <div
                                     className="w-full h-[44px] bg-white border-[2px] border-[#D4D4D7] rounded-lg flex justify-between p-2 items-center cursor-pointer"
-                                    onClick={() => setSelectedServiceStatus(selectedServiceStatus ? "" : "Chọn dịch vụ")}
+                                    onClick={() => setShowServiceStatus(!showServiceStatus)}
                                 >
                                     <p className="sl-title text-[#535261] text-[16px]">{selectedServiceStatus || "Chọn dịch vụ"}</p>
                                     <i className={`fa-solid ${selectedServiceStatus ? 'fa-caret-up' : 'fa-caret-down'} text-[#FF7506]`}></i>
                                 </div>
-                                {selectedServiceStatus && (
-                                    <div className="w-full bg-white rounded-lg absolute mt-[43px]">
-                                        <ul className="mt-2 flex flex-col text-left text-[14px] max-h-[200px] overflow-y-scroll overflow-x-hidden custom-scrollbar">
-                                            <li
-                                                className="bg-[#FFF2E7]"
-                                                onClick={() => { setSelectedServiceStatus('Khám sản - Phụ khoa'); }}
-                                            >
+                                {showServiceStatus && (
+                                    <div className="w-[400px] bg-white rounded-lg absolute mt-[44px] text-left cursor-pointer">
+                                        <ul className="mt-2 flex flex-col text-[14px] max-h-[200px] overflow-y-scroll overflow-x-hidden custom-scrollbar">
+
+                                            <li className={`${selectedServiceStatus === "Khám sản - Phụ khoa" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám sản - Phụ khoa'); setShowServiceStatus(false); }}>
                                                 <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám sản - Phụ khoa</p>
+                                            </li>
+                                            <li className={`${selectedServiceStatus === "Khám răng hàm mặt" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám răng hàm mặt'); setShowServiceStatus(false); }}>
+                                                <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám răng hàm mặt</p>
+                                            </li>
+                                            <li className={`${selectedServiceStatus === "Khám tai mũi họng" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám tai mũi họng'); setShowServiceStatus(false); }}>
+                                                <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám tai mũi họng</p>
+                                            </li>
+                                            <li className={`${selectedServiceStatus === "Khám tai mũi họng" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám tai mũi họng'); setShowServiceStatus(false); }}>
+                                                <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám tai mũi họng</p>
                                             </li>
                                         </ul>
                                     </div>
@@ -57,7 +71,7 @@ export const New = () => {
                             </div>
                             <div className="flex gap-[32px] mt-[80px] justify-center">
                                 <Link to={`/capso`}
-                                    
+
                                     className="w-[115px] h-[48px] bg-[#FFF2E7] text-[#FF9138] text-[16px] font-bold rounded-xl p-3"
                                 >
                                     Hủy

@@ -1,7 +1,11 @@
 import { useState } from "react";
 import './capso.css';
 import { Link } from "react-router-dom";
+import { CapsoList } from "../component/capsoList";
 export const Capso = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     // Trạng thái mở/đóng và lựa chọn cho từng dropdown
     const [showServiceStatus, setShowServiceStatus] = useState(false);
     const [selectedServiceStatus, setSelectedServiceStatus] = useState("Tất cả");
@@ -102,13 +106,23 @@ export const Capso = () => {
                         <p className='text-[#282739] text-[16px] font-[600] leading-[24px]'>Chọn thời gian</p>
                         <div className='flex gap-1 items-center'>
                             <div className='date-1 bg-white rounded-lg'>
-                                <input className='w-[150px] h-[44px] rounded-lg p-2 border-[1px]' type="date" />
+                                <input
+                                    className='w-[150px] h-[44px] rounded-lg p-2 border-[1px]'
+                                    type="date"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                />
                             </div>
                             <div>
                                 <i className="fa-solid fa-caret-right"></i>
                             </div>
                             <div className='date-1 bg-white rounded-lg '>
-                                <input className='w-[150px] h-[44px] rounded-lg p-2 border-[1px]' type="date" />
+                                <input
+                                    className='w-[150px] h-[44px] rounded-lg p-2 border-[1px]'
+                                    type="date"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
                             </div>
                         </div>
                     </div>
@@ -116,52 +130,41 @@ export const Capso = () => {
                     <div className="w-[240px] h-[72px] flex flex-col mt-[16px]">
                         <p className='text-[#282739] text-[16px] font-[600] leading-[24px] mb-1'>Từ khóa</p>
                         <div className='w-[240px] h-[44] relative'>
-                            <input className="w-full h-[44px] border-[1px] rounded-lg p-2 " type="text" placeholder="nhập từ khóa" />
+                            <input className="w-full h-[44px] border-[1px] rounded-lg p-2 " type="text" placeholder="nhập từ khóa" onChange={(e) => setSearchTerm(e.target.value)}  />
                             <i className="fa-solid fa-magnifying-glass absolute right-4 top-4 text-[#FF7506]"></i>
                         </div>
                     </div>
                 </div>
                 <div className="flex gap-[24px] mt-[16px]">
                     <div className="w-[1112px] h-[450px] ">
-                    <table className="w-full rounded-xl bg-[#FF9138]">
-                        <thead className=" h-[49px] text-[16px] text-white font-bold leading-[24px] text-left">
-                            <tr className="">
-                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">STT</th>
-                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Tên khách hàng</th>
-                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Tên dịch vụ</th>
-                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Thời gian cấp</th>
-                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Hạn sử dụng</th>
-                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Trạng thái</th>
-                                <th className="p-2 border-r-[2px] border-[#FFE3CD]">Nguồn cấp</th>
-                                <th className="p-2"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr className="text-[#535261] text-[14px] font-[400] leading-21 h-[49px] odd:bg-white even:bg-blue-500">
-                                <td className="p-2 border-r-[2px] border-[#FFE3CD]">1</td>
-                                <td className="p-2 border-r-[2px] border-[#FFE3CD]">Nguyễn Văn A</td>
-                                <td className="p-2 border-r-[2px] border-[#FFE3CD]">Dịch vụ A</td>
-                                <td className="p-2 border-r-[2px] border-[#FFE3CD]">08:00 AM</td>
-                                <td className="p-2 border-r-[2px] border-[#FFE3CD]">09:00 AM</td>
-                                <td className="p-2 border-r-[2px] border-[#FFE3CD]">Hoạt động</td>
-                                <td className="p-2 border-r-[2px] border-[#FFE3CD]">Nguồn A</td>
-                                <td className="p-2"><Link className="underline text-blue-500" to='#'>Chi tiết </Link></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table className="w-full rounded-xl bg-[#FF9138]">
+                            <thead className=" h-[49px] text-[16px] text-white font-bold leading-[24px] text-left">
+                                <tr className="">
+                                    <th className="p-2 border-r-[2px] border-[#FFE3CD]">STT</th>
+                                    <th className="p-2 border-r-[2px] border-[#FFE3CD]">Tên khách hàng</th>
+                                    <th className="p-2 border-r-[2px] border-[#FFE3CD]">Tên dịch vụ</th>
+                                    <th className="p-2 border-r-[2px] border-[#FFE3CD]">Thời gian cấp</th>
+                                    <th className="p-2 border-r-[2px] border-[#FFE3CD]">Hạn sử dụng</th>
+                                    <th className="p-2 border-r-[2px] border-[#FFE3CD]">Trạng thái</th>
+                                    <th className="p-2 border-r-[2px] border-[#FFE3CD]">Nguồn cấp</th>
+                                    <th className="p-2"></th>
+                                </tr>
+                            </thead>
+                            <CapsoList searchTerm={searchTerm} startDate={startDate} endDate={endDate} selectedServiceStatus={selectedServiceStatus} selectedActivityStatus={selectedActivityStatus} selectedSourceStatus={selectedSourceStatus} />
+                        </table>
                     </div>
                     <div className='flex flex-col'>
-                    <div className='de-aside-btn'>
-                        <Link to={`/capso/capsomoi`}>
-                        <button className='de-add-btn'>
-                            <div className='plus-icon'>
-                            <i className="fa-solid fa-pen"></i>
-                            </div>
-                            <p>Cấp số mới</p>
-                        </button>
-                        </Link>
-                    </div>
-                    
+                        <div className='de-aside-btn'>
+                            <Link to={`/capso/capsomoi`}>
+                                <button className='de-add-btn'>
+                                    <div className='plus-icon'>
+                                        <i className="fa-solid fa-pen"></i>
+                                    </div>
+                                    <p>Cấp số mới</p>
+                                </button>
+                            </Link>
+                        </div>
+
                     </div>
                 </div>
             </div>
