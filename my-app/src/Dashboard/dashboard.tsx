@@ -26,8 +26,14 @@ const options = {
         y: {
             beginAtZero: false,
         }
+    }, // Thêm dấu phẩy ở đây
+    plugins: {
+        legend: {
+            display: false, // Tắt legend
+        }
     }
 };
+
 const Dashboard = () => {
     const {numbers} = useSelector((state:RootState) => state.capso);
     const [show, setShow] = useState(false);

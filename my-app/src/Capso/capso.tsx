@@ -18,7 +18,7 @@ export const Capso = () => {
 
     return (
         <>
-            <div className="capso mt-[100px] ">
+            <div className="capso ">
                 <p className="text-[#FF7506] text-[24px] font-bold leading-[36px]">Quản lý cấp số</p>
                 <div className="flex gap-[24px] items-center ">
                     {/* Dropdown Tên Dịch Vụ */}

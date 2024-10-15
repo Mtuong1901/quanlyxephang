@@ -101,7 +101,7 @@ export const Header = () => {
         setRouter(formatRouterPath(location.pathname));
     }, [location, dispatch]);
     return (
-        <div className="header h-[88px] flex items-center justify-between w-[1336px] fixed">
+        <div className="header h-[70px] flex items-center justify-between w-[1336px] fixed">
             <div className="router ml-[24px] text-[20px] font-bold text-[#FF9138]">
                 {router}
             </div>
