@@ -3,6 +3,8 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { Line, } from 'react-chartjs-2';
 import { db } from '../config/FirebaseConfig';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -27,6 +29,7 @@ const options = {
     }
 };
 const Dashboard = () => {
+    const {numbers} = useSelector((state:RootState) => state.capso);
     const [show, setShow] = useState(false);
     const [timeFrame, setTimeFrame] = useState<'day' | 'week' | 'month'>('day');
     const [chartData, setChartData] = useState({ labels: [] as string[], datasets: [] as any[] });
@@ -78,7 +81,7 @@ const Dashboard = () => {
                             </p>
                         </div>
                         <div className='flex justify-between items-center ml-[12px] mr-[8px] mt-[12px] mb-1'>
-                            <h2 className='text-[30px] font-bold leading-[45px]'>4.221</h2>
+                            <h2 className='text-[30px] font-bold leading-[45px]'>{numbers.length}</h2>
                             <div className='flex items-center gap-1 text-[#FF9138] w-[41px] h-[12px] rounded-2xl bg-[#fff3e9] p-1 mt-3'>
                                 <i className="fa-solid fa-arrow-down text-[8px]"></i>
                                 <p className='text-[8px] font-[400] leading-[12px]'>3.21%</p>
@@ -91,7 +94,7 @@ const Dashboard = () => {
                             <p className="f-box-title p-1 w-[100px] mt-[8px] ml-[12px]">Số thứ tự đã sử dụng </p>
                         </div>
                         <div className='flex justify-between items-center ml-[12px] mr-[8px] mt-[12px] mb-1'>
-                            <h2 className='text-[30px] font-bold'>4.221</h2>
+                            <h2 className='text-[30px] font-bold'>{numbers.filter((num) => num.status==="Đã sử dụng").length}</h2>
                             <div className='flex items-center gap-1 text-[#E73F3F] w-[41px] h-[12px] rounded-2xl bg-red-200 p-1 mt-3'>
                                 <i className="fa-solid fa-arrow-down text-[8px]"></i>
                                 <p className='text-[8px] font-[400] leading-[12px]'>3.21%</p>
@@ -104,7 +107,7 @@ const Dashboard = () => {
                             <p className="f-box-title p-1 w-[100px] mt-[8px] ml-[12px]">Số thứ tự đang chờ</p>
                         </div>
                         <div className='flex justify-between items-center ml-[12px] mr-[8px] mt-[12px] mb-1'>
-                            <h2 className='text-[30px] font-bold'>4.221</h2>
+                            <h2 className='text-[30px] font-bold'>{numbers.filter((num) => num.status==="Đang chờ").length}</h2>
                             <div className='flex items-center gap-1 text-[#FF9138] w-[41px] h-[12px] rounded-2xl bg-[#fff3e9] p-1 mt-3'>
                                 <i className="fa-solid fa-arrow-down text-[8px]"></i>
                                 <p className='text-[8px] font-[400] leading-[12px]'>3.21%</p>
@@ -117,7 +120,7 @@ const Dashboard = () => {
                             <p className="f-box-title p-1 w-[100px] mt-[8px] ml-[12px]">Số thứ tự đã bỏ qua</p>
                         </div>
                         <div className='flex justify-between items-center ml-[12px] mr-[8px] mt-[12px] mb-1'>
-                            <h2 className='text-[30px] font-bold'>4.221</h2>
+                            <h2 className='text-[30px] font-bold'>{numbers.filter((num) => num.status==="Bỏ qua").length}</h2>
                             <div className='flex items-center gap-1 text-[#E73F3F] w-[41px] h-[12px] rounded-2xl bg-red-200 p-1 mt-3'>
                                 <i className="fa-solid fa-arrow-down text-[8px]"></i>
                                 <p className='text-[8px] font-[400] leading-[12px]'>3.21%</p>

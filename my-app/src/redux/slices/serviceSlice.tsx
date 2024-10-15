@@ -26,42 +26,41 @@ export const FetchService = createAsyncThunk('service/fetchService', async () =>
         status: doc.data().status,
         procress: doc.data().procress,
         number: doc.data().number,
+        sequentialNumbers: doc.data().sequentialNumbers,
     })) as Iservice[];
     return serviceList;
 });
 
-// Add a new device
-// export const addDevice = createAsyncThunk<{ idDoc: string } & Idevice, Idevice>(
-//     'device/addDevice',
-//     async (deviceData: Idevice) => {
-//         const docRef = await addDoc(collection(db, 'devices'), deviceData);
-//         return { idDoc: docRef.id, ...deviceData };
-//     }
-// );
+// add new services
+export const addService = createAsyncThunk<{ idDoc: string } & Iservice, Iservice>(
+    'service/addService',
+    async (serviceData: Iservice, { rejectWithValue }) => {
+        try {
+            const serviceCol = collection(db, 'services');
+            const q = query(serviceCol, where('idService', '==', serviceData.idService));
+            const querySnapshot = await getDocs(q);
+            
+            if (!querySnapshot.empty) {
+                return rejectWithValue("Service with this idService already exists.");
+            }
 
-// export const updateDevice = createAsyncThunk<
-//     { id: string },
-//     { idDevice: string; deviceData: Partial<Idevice> }
-// >(
-//     'device/updateDevice',
-//     async ({ idDevice, deviceData }, thunkAPI) => {
-//         try {
-//             const devicecol = collection(db, 'devices');
-//             const deviceQuery = query(devicecol, where("idDevice", "==", idDevice));
-//             const docref = await getDocs(deviceQuery);
-//             if (!deviceQuery) {
-//                 console.log('thiet bi khong ton tai');
-//             }
-//             const idDoc = docref.docs[0].ref;
-//             await updateDoc(idDoc, deviceData);
-//             return { id: idDoc.id };
-//         } catch (error) {
-//             const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-//             console.error("Error updating device:", errorMessage);
-//             return thunkAPI.rejectWithValue({ error: errorMessage });
-//         }
-//     }
-// );
+            const docRef = await addDoc(serviceCol, serviceData);
+
+            // Tạo mảng số tự động
+            const sequentialNumbers = [];
+            for (let i = 1; i <= 8; i++) {
+                sequentialNumbers.push(`${serviceData.idService}${String(i).padStart(4, '0')}`);
+            }
+
+            // Bạn có thể lưu mảng này vào Firestore nếu cần
+            await updateDoc(docRef, { sequentialNumbers }); 
+
+            return { idDoc: docRef.id, ...serviceData };
+        } catch (error) {
+            return rejectWithValue(error instanceof Error ? error.message : "An unknown error occurred");
+        }
+    }
+);
 
 export const FetchOneService = createAsyncThunk(
     'service/fetchOneService',
@@ -78,7 +77,8 @@ export const FetchOneService = createAsyncThunk(
                 description: data?.description || '',
                 status: data?.status || 'Unknown',
                 procress : data?.procress || '',
-                number : data?.number || null
+                number : data?.number || null,
+                sequentialNumbers: data?.sequentialNumbers,
             } as Iservice;
         } catch (error) {
             throw new Error(error instanceof Error ? error.message : "An unknown error occurred");
@@ -101,7 +101,7 @@ const serviceSlice = createSlice({
             })
             .addCase(FetchService.rejected, (state, action) => {
                 state.status = 'failed';
-                state.error = action.error.message || 'Failed to fetch devices';
+                state.error = action.error.message || 'Failed to fetch services';
             })
             .addCase(FetchOneService.pending, (state) => {
                 state.status = 'loading';
@@ -109,7 +109,7 @@ const serviceSlice = createSlice({
             })
             .addCase(FetchOneService.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                const existingServiceIndex = state.services.findIndex(device => device.idService === action.payload.idService);
+                const existingServiceIndex = state.services.findIndex(service => service.idService === action.payload.idService);
                 if (existingServiceIndex !== -1) {
                     state.services[existingServiceIndex] = action.payload;
                 } else {
@@ -118,8 +118,21 @@ const serviceSlice = createSlice({
             })
             .addCase(FetchOneService.rejected, (state, action) => {
                 state.status = 'failed';
-                state.error = action.error.message || 'Failed to fetch device';
+                state.error = action.error.message || 'Failed to fetch service';
             })
+            .addCase(addService.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(addService.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.services.push(action.payload);
+            })
+            .addCase(addService.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.payload as string || 'Failed to add service';
+
+            });
     },
 });
 

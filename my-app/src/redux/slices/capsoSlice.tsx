@@ -1,26 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { db } from "../../config/FirebaseConfig";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 interface Icapso {
-    idNumber?: string; // Thêm idNumber để dễ dàng quản lý
+    idNumber?: string; 
     number: number;
     cus_name?: string;
     status: string;
-    ngaycap: Date; // Ngày cấp
-    hethan: Date; // Ngày hết hạn
-    nguoncap: string; // Nguồn cấp
-    service_name: string; // Tên dịch vụ
+    ngaycap: Date; 
+    hethan: Date; 
+    nguoncap: string; 
+    service_name: string; 
 }
 
 interface CapsoState {
     numbers: Icapso[];
+    selectedNumber?: Icapso;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
 }
 
 const initialState: CapsoState = {
     numbers: [],
+    selectedNumber: undefined,
     status: 'idle',
     error: null,
 };
@@ -45,13 +47,40 @@ export const FetchCapsoData = createAsyncThunk<Icapso[]>(
     }
 );
 
-// Add New Number
+export const FetchOneNumbers = createAsyncThunk<Icapso, string>(
+    'capso/getonecapso',
+    async (id: string) => {
+        const capsoDoc = await getDoc(doc(db, 'capso', id));
+        if (!capsoDoc.exists()) {
+            throw new Error("Capso not found");
+        }
+        const data = capsoDoc.data();
+        return {
+            idNumber: id,
+            service_name: data.service_name,
+            number: data.number,
+            cus_name: data.cus_name || '',
+            status: data.status,
+            ngaycap: data.ngaycap.toDate(),
+            hethan: data.hethan.toDate(),
+            nguoncap: data.nguoncap,
+        } as Icapso;
+    }
+);
+
+// Add New Number with sequential ID
 export const addNewNumber = createAsyncThunk(
     'capso/capsomoi',
-    async (data: Icapso, { rejectWithValue }) => {
+    async (data: Omit<Icapso, 'number'>, { rejectWithValue, getState }) => {
         try {
-            const docRef = await addDoc(collection(db, "capso"), data);
-            return { idNumber: docRef.id, ...data }; // Đảm bảo trả về idNumber
+            const state = getState() as { capso: CapsoState };
+            const currentNumbers = state.capso.numbers;
+            
+            const maxNumber = currentNumbers.reduce((max, num) => Math.max(max, num.number), 0);
+            const newNumber = maxNumber + 1;
+            
+            const docRef = await addDoc(collection(db, "capso"), { ...data, number: newNumber });
+            return { idNumber: docRef.id, number: newNumber, ...data };
         } catch (error: any) {
             console.error(error);
             return rejectWithValue(error.message);
@@ -76,6 +105,17 @@ const capsoSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.error.message || 'Failed to fetch capso data';
             })
+            .addCase(FetchOneNumbers.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(FetchOneNumbers.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.selectedNumber = action.payload;
+            })
+            .addCase(FetchOneNumbers.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message || 'Failed to fetch capso data';
+            })
             .addCase(addNewNumber.pending, (state) => {
                 state.status = 'loading';
             })
@@ -84,7 +124,6 @@ const capsoSlice = createSlice({
                 if (action.payload) { 
                     state.numbers.push(action.payload);
                     state.numbers.sort((a, b) => a.number - b.number);
-                    localStorage.setItem('capsoNumbers', JSON.stringify(state.numbers));
                 }
             })
             .addCase(addNewNumber.rejected, (state, action) => {

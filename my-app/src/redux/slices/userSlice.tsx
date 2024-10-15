@@ -1,8 +1,9 @@
 // src/redux/slices/userSlice.ts
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Iuser } from "../../Iuser";
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../../config/FirebaseConfig";
+import { getAuth } from "firebase/auth";
 
 interface UserState {
     users: Iuser[];
@@ -62,12 +63,12 @@ export const loginUser = createAsyncThunk<Iuser, { username: string; password: s
             const user_doc = await getDocs(user_col);
             const userdata = user_doc.docs.find((doc) => doc.data().username === username);
             if (!userdata) {
-                return rejectWithValue("User not found");
+                return rejectWithValue("Sai mật khẩu hoặc tên đăng nhập");
             }
 
             const userData = userdata.data();
             if (userData.password !== password) {
-                return rejectWithValue("Invalid password");
+                return rejectWithValue("Sai mật khẩu hoặc tên đăng nhập");
             }
             const user: Iuser ={
                 idUser: userData.idUser,
@@ -82,6 +83,48 @@ export const loginUser = createAsyncThunk<Iuser, { username: string; password: s
             return user;
         } catch (error) {
             return rejectWithValue("An error occurred during login");
+        }
+    }
+);
+
+export const ResetpasswordUser = createAsyncThunk<Iuser, { email: string; password: string }, { rejectValue: string }>(
+    'user/resetPassword',
+    async ({ email, password }, { rejectWithValue }) => {
+        const auth = getAuth();
+        
+        try {
+            const user_col = collection(db, 'user');
+            const q = query(user_col, where("email", "==", email));
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                return rejectWithValue("Email không tồn tại trong hệ thống");
+            }
+
+            const userDoc = querySnapshot.docs[0];
+            const userId = userDoc.id; // Lấy ID của document người dùng
+
+            // Cập nhật mật khẩu
+            const userRef = doc(db, 'user', userId);
+            await updateDoc(userRef, {
+                password: password, // Cập nhật mật khẩu mới
+            });
+
+            const updatedUser: Iuser = {
+                idUser: userId,
+                email: email,
+                password: password,
+                // Thêm các trường khác nếu cần
+                fullname: userDoc.data().fullname, // Ví dụ, nếu bạn muốn trả về fullname
+                username: userDoc.data().username,
+                role: userDoc.data().role,
+                phone: userDoc.data().phone,
+                img: userDoc.data().img,
+            };
+
+            return updatedUser; // Trả về người dùng đã được cập nhật
+        } catch (error) {
+            return rejectWithValue("Cập nhật mật khẩu thất bại!");
         }
     }
 );
@@ -131,6 +174,18 @@ const userSlice = createSlice({
             .addCase(fetchUserByEmail.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Không tìm thấy email';
+            })
+            .addCase(ResetpasswordUser.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(ResetpasswordUser.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                // Có thể cập nhật thông tin người dùng ở đây nếu cần
+            })
+            .addCase(ResetpasswordUser.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message || 'Cập nhật mật khẩu thất bại';
             });
     },
 });

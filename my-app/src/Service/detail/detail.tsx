@@ -15,7 +15,7 @@ export const ServiceDetail = () => {
             console.log('Fetched device:', services);
         }
     }, [dispatch, id]);
-
+    const numberList = service?.sequentialNumbers || [];
     const [showStatus, setShowStatus] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState("Tất cả");
     return (
@@ -92,40 +92,47 @@ export const ServiceDetail = () => {
                                 <th className="p-2">Trạng thái</th>
                             </thead>
                             <tbody>
-                                <tr className="text-[#535261] text-[14px] font-[400] leading-21 h-[49px] odd:bg-white even:bg-blue-500 ">
-                                    <td className="p-2">{service?.number}</td>
-                                    <td className="p-2 flex items-center gap-1">
-                                        <div className={`${service?.procress==="Đã hoàn thành" ? "bg-[#34CD26]" :""} w-[8px] h-[8px] rounded-lg `}></div>
-                                        {service?.procress}
-                                    </td>
-                                </tr>
+                                {numberList.map((num) => {
+                                    return (
+                                        <>
+                                            <tr className="text-[#535261] text-[14px] font-[400] leading-21 h-[49px] odd:bg-white even:bg-[#FFF2E7] ">
+                                                <td className="p-2">{num}</td>
+                                                <td className="p-2 flex items-center gap-1">
+                                                    <div className={`${service?.procress === "Đang thực hiện" ? "bg-[#34CD26]" : ""} w-[8px] h-[8px] rounded-lg `}></div>
+                                                    {service?.procress}
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )
+                                })}
+
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div>
-                <div className='flex flex-col'>
-                    <div className='de-aside-btn'>
-                        <Link to={`/dichvu/capnhat`}>
-                        <button className='de-add-btn'>
-                            <div className='plus-icon'>
-                            <i className="fa-solid fa-pen"></i>
-                            </div>
-                            <p>Cập nhật danh sách</p>
-                        </button>
-                        </Link>
-                    </div>
-                    <hr className='flex justify-center w-[60px] ml-[8px] text-[#FFF2E7]' />
-                    <div className='de-aside-btn'>
-                        <Link to="/dichvu">
-                        <button className='de-add-btn'>
-                            <div className='plus-icon'>
-                            <i className="fa-solid fa-rotate-left"></i>
-                            </div>
-                            <p>Quay lại</p>
-                        </button>
-                        </Link>
-                    </div>
+                    <div className='flex flex-col'>
+                        <div className='de-aside-btn'>
+                            <Link to={`/dichvu/capnhat`}>
+                                <button className='de-add-btn'>
+                                    <div className='plus-icon'>
+                                        <i className="fa-solid fa-pen"></i>
+                                    </div>
+                                    <p>Cập nhật danh sách</p>
+                                </button>
+                            </Link>
+                        </div>
+                        <hr className='flex justify-center w-[60px] ml-[8px] text-[#FFF2E7]' />
+                        <div className='de-aside-btn'>
+                            <Link to="/dichvu">
+                                <button className='de-add-btn'>
+                                    <div className='plus-icon'>
+                                        <i className="fa-solid fa-rotate-left"></i>
+                                    </div>
+                                    <p>Quay lại</p>
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

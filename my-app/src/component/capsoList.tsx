@@ -59,7 +59,7 @@ export const CapsoList: React.FC<CapsoListProps> = ({
                         {number.status}
                     </td>
                     <td className="p-2 border-r-[2px] border-[#FFE3CD]">{number.nguoncap}</td>
-                    <td className="p-2"><Link className="underline text-blue-500" to='#'>Chi tiết</Link></td>
+                    <td className="p-2"><Link className="underline text-blue-500" to={`/capso/chitiet/${number.idNumber}`}>Chi tiết</Link></td>
                 </tr>
             ))}
         </tbody>

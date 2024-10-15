@@ -18,6 +18,8 @@ import { BaoCao } from './Report/baocao';
 import { Profile } from './profile/profile';
 import { New } from './Capso/new/new';
 import Forgotpass from './Login/forgotpass/forgotpass';
+import { CapsoDetail } from './Capso/detail/capsoDetail';
+import Resetpassword from './Login/resetpass/resetpass';
 
 // Tạo MainLayout component
 const MainLayout = () => {
@@ -68,6 +70,7 @@ export const App = () => {
         {/* login */}
         <Route path="/login" element={<Login />}/>
         <Route path='/login/quenmatkhau' element={<Forgotpass/>}/>
+        <Route path='/login/resetpass' element={<Resetpassword/>}/>
         {/* thngtincanhan */}
         <Route path='/thongtincanhan/'element={<Sublayout/>}>
         <Route path='/thongtincanhan/:id' element={<Profile/>}/>
@@ -95,6 +98,7 @@ export const App = () => {
         <Route path='/capso' element={<Sublayout/>}>
         <Route path='/capso' element={<Capso/>} />
         <Route path='/capso/capsomoi' element={<New/>} />
+        <Route path='/capso/chitiet/:id' element={<CapsoDetail/>} />
         </Route>
         {/* baocaoRouter */}
         <Route path='/baocao' element={<Sublayout/>}>
