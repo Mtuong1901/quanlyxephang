@@ -59,7 +59,6 @@ export const FetchOneDevice = createAsyncThunk(
     }
 );
 
-
 // Add a new device
 export const addDevice = createAsyncThunk<{ idDoc: string } & Idevice, Idevice>(
     'device/addDevice',
@@ -88,6 +87,35 @@ export const updateDevice = createAsyncThunk<
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
             console.error("Error updating device:", errorMessage);
+            return thunkAPI.rejectWithValue({ error: errorMessage });
+        }
+    }
+);
+// Action xóa dịch vụ
+export const deleteService = createAsyncThunk(
+    'device/deleteService',
+    async ({ idDevice, serviceIndex }: { idDevice: string; serviceIndex: number }, thunkAPI) => {
+        try {
+            // Lấy tài liệu thiết bị theo idDevice
+            const deviceQuery = query(collection(db, 'devices'), where("idDevice", "==", idDevice));
+            const deviceDoc = await getDocs(deviceQuery);
+
+            if (!deviceDoc.empty) {
+                const deviceRef = deviceDoc.docs[0].ref;
+                const deviceData = deviceDoc.docs[0].data();
+
+                // Xóa dịch vụ khỏi mảng services tại vị trí index
+                const updatedServices = deviceData.services.filter((_: any, i: number) => i !== serviceIndex);
+
+                // Cập nhật mảng dịch vụ trong Firestore
+                await updateDoc(deviceRef, { services: updatedServices });
+
+                return { idDevice, updatedServices };
+            } else {
+                throw new Error("Device not found");
+            }
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
             return thunkAPI.rejectWithValue({ error: errorMessage });
         }
     }
@@ -157,6 +185,22 @@ const deviceSlice = createSlice({
             .addCase(updateDevice.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Failed to update device';
+            })
+            .addCase(deleteService.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(deleteService.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                const { idDevice, updatedServices } = action.payload;
+                const deviceIndex = state.devices.findIndex(device => device.idDevice === idDevice);
+                if (deviceIndex !== -1) {
+                    state.devices[deviceIndex].services = updatedServices;
+                }
+            })
+            .addCase(deleteService.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message || 'Failed to delete service';
             });
 
     },

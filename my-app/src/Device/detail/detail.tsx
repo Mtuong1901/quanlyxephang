@@ -50,7 +50,7 @@ export const Detail = () => {
                                 </div>
                             </div>
                             <div className=" ml-[24px] flex gap-[366px] mb-[16px]">
-                                <div className="w-[220px] h-[24px]">
+                                <div className="w-[230px] h-[24px]">
                                     <p className="text-[#282739] text-[16px] font-[600] leading-[24px]" >
                                         Địa chỉ IP: <span className="ml-[43px] text-[#535261] text-[16px] font-[400] leading-[24px]">{device?.ip}</span>
                                     </p>

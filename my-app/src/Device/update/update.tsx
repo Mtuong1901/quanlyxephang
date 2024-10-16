@@ -49,11 +49,31 @@ export const Update = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (id) {
-            dispatch(updateDevice({ idDevice:id,deviceData:formdata }));
+            dispatch(updateDevice({ idDevice: id, deviceData: formdata }));
             alert("Updated device successfully");
             navigate('/thietbi');
         }
     };
+    const handleDelete = (index: number) => {
+        if (window.confirm('Bạn có chắc chắn muốn xoá dịch vụ này?')) {
+            // Kiểm tra và khởi tạo mảng services nếu chưa có
+            const currentServices = formdata.services || [];
+            // Kiểm tra xem index có hợp lệ không
+            if (index < 0 || index >= currentServices.length) {
+                alert("Index không hợp lệ. Không thể xóa dịch vụ.");
+                return;
+            }
+            const updatedServices = currentServices.filter((_, i) => i !== index);
+            setFormData((prevData) => ({
+                ...prevData,
+                services: updatedServices,
+            }));
+    
+            alert("Deleted service successfully");
+        }
+    };
+    
+    
     return (
         <>
             <div className="container">
@@ -66,53 +86,55 @@ export const Update = () => {
                                 <div className="flex gap-[100px] ml-[24px] mb-[16px]">
                                     <div className="w-[540px] h-[76px]">
                                         <label className="text-[16px] font-[600] text-[#282739]" htmlFor="">Mã thiết bị: <span className="text-[#FF4747]">*</span></label>
-                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="idDevice" id="" value={formdata.idDevice} onChange={handleChange}/>
+                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="idDevice" id="" value={formdata.idDevice} onChange={handleChange} />
                                     </div>
                                     <div className="w-[540px] h-[76px]">
                                         <label className="text-[16px] font-[600] text-[#282739]" htmlFor="">Loại thiết bị: <span className="text-[#FF4747]">*</span></label>
-                                        <div className={`w-[540px] h-[44px] border-[1px] rounded-lg mt-1 cursor-pointer relative ${dropdown ? "border-[#FFAC6A]" :""}`} onClick={() => setDropdown(!dropdown)}>
-                                        <p className="text-[#282739] text-[16px] leading-[24px] font-[400] p-2">{formdata.type}</p>
-                                    {dropdown && (
-                                        <ul className="w-full bg-white border-[1px] absolute ml-0 rounded-lg pt-1 pb-1 mt-1">
-                                            <li className={` h-[44px] p-2 text-[#282739] text-[16px] leading-[24px] font-[400] ${formdata.type === 'Kiosk' ? "bg-[#FFF2E7]" :""}`} onClick={() => handleTypeChange('Kiosk')}>Kiosk</li>
-                                            <li className={` h-[44px] p-2 text-[#282739] text-[16px] leading-[24px] font-[400] ${formdata.type === 'Display Counter' ? "bg-[#FFF2E7]" :""}`} onClick={() => handleTypeChange('Display Counter')}>Display Counter</li>
-                                        </ul>
-                                    )}
-                                </div>
+                                        <div className={`w-[540px] h-[44px] border-[1px] rounded-lg mt-1 cursor-pointer relative ${dropdown ? "border-[#FFAC6A]" : ""}`} onClick={() => setDropdown(!dropdown)}>
+                                            <p className="text-[#282739] text-[16px] leading-[24px] font-[400] p-2">{formdata.type}</p>
+                                            {dropdown && (
+                                                <ul className="w-full bg-white border-[1px] absolute ml-0 rounded-lg pt-1 pb-1 mt-1">
+                                                    <li className={` h-[44px] p-2 text-[#282739] text-[16px] leading-[24px] font-[400] ${formdata.type === 'Kiosk' ? "bg-[#FFF2E7]" : ""}`} onClick={() => handleTypeChange('Kiosk')}>Kiosk</li>
+                                                    <li className={` h-[44px] p-2 text-[#282739] text-[16px] leading-[24px] font-[400] ${formdata.type === 'Display Counter' ? "bg-[#FFF2E7]" : ""}`} onClick={() => handleTypeChange('Display Counter')}>Display Counter</li>
+                                                </ul>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="flex gap-[100px] ml-[24px]">
                                     <div className="w-[540px] h-[76px] mb-[16px]">
                                         <label className="text-[16px] font-[600] text-[#282739]" htmlFor="">Tên thiết bị: <span className="text-[#FF4747]">*</span></label>
-                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="name" id=""  value={formdata.name}  onChange={handleChange} />
+                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="name" id="" value={formdata.name} onChange={handleChange} />
                                     </div>
                                     <div className="w-[540px] h-[76px]">
                                         <label className="text-[16px] font-[600] text-[#282739]" htmlFor="">Tên đăng nhập: <span className="text-[#FF4747]">*</span></label>
-                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="username" id=""  value={formdata.username} onChange={handleChange} /> 
+                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="username" id="" value={formdata.username} onChange={handleChange} />
                                     </div>
                                 </div>
                                 <div className="flex gap-[100px] ml-[24px] mb-[16px] ">
                                     <div className="w-[540px] h-[76px]">
                                         <label className="text-[16px] font-[600] text-[#282739]" htmlFor="">Địa chỉ IP: <span className="text-[#FF4747]">*</span></label>
-                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="ip" id=""  value={formdata.ip}  onChange={handleChange} />
+                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="ip" id="" value={formdata.ip} onChange={handleChange} />
                                     </div>
                                     <div className="w-[540px] h-[76px]">
                                         <label className="text-[16px] font-[600] text-[#282739]" htmlFor="">Mật khẩu: <span className="text-[#FF4747]">*</span></label>
-                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="password" id=""  value={formdata.password}  onChange={handleChange}/>
+                                        <input className="w-full h-[44px] border-[1px] border-#D4D4D7] rounded-lg mt-2 p-2" type="text" name="password" id="" value={formdata.password} onChange={handleChange} />
                                     </div>
                                 </div>
                                 <div className="ml-[24px] w-[1180px] h-[112px]">
                                     <p className="text-[16px] font-[600] text-[#282739]">Dich vụ sử dụng:<span className="text-[#FF4747]">*</span></p>
                                     <div className="w-full h-full border-[1px] border-[#FFAC6A] rounded-xl mt-2 cursor-pointer">
                                         <ul className="flex p-2 gap-2 items-center">
-                                            {device?.services.map((service) =>{
+                                            {device?.services.map((service, index) => {
                                                 return (
-                                                    <>
-                                                    <li className="w-[155px] h-[28px] bg-[#FFAC6A] text-white text-[14px] font-bold leading-[20px] p-1 rounded-lg" key={formdata.idDevice}>{service}</li>
-                                                    </>
+                                                    <li className="w-[155px] h-[28px] bg-[#FFAC6A] text-white text-[14px] font-bold leading-[20px] p-1 rounded-lg flex items-center justify-around" key={index}>
+                                                        {service}
+                                                        <i className="fa-solid fa-x" onClick={() => handleDelete(index)}></i>
+                                                    </li>
                                                 )
                                             })}
                                         </ul>
+
                                     </div>
                                 </div>
                                 <div className="flex justify-center items-center gap-[32px] mt-[48px]">
