@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Iuser } from "../../Iuser";
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../../config/FirebaseConfig";
-import { getAuth } from "firebase/auth";
+import { getAuth, verifyPasswordResetCode } from "firebase/auth";
 
 interface UserState {
     users: Iuser[];
@@ -87,12 +87,16 @@ export const loginUser = createAsyncThunk<Iuser, { username: string; password: s
     }
 );
 
-export const ResetpasswordUser = createAsyncThunk<Iuser, { email: string; password: string }, { rejectValue: string }>(
+export const ResetpasswordUser = createAsyncThunk<Iuser, { email: string; password: string; code: string }, { rejectValue: string }>(
     'user/resetPassword',
-    async ({ email, password }, { rejectWithValue }) => {
+    async ({ email, password, code }, { rejectWithValue }) => {
         const auth = getAuth();
         
         try {
+            // Xác minh mã reset
+            await verifyPasswordResetCode(auth, code); // Chỉ xác minh, không cần gán giá trị
+            
+            // Kiểm tra sự tồn tại của email trong cơ sở dữ liệu
             const user_col = collection(db, 'user');
             const q = query(user_col, where("email", "==", email));
             const querySnapshot = await getDocs(q);
@@ -112,10 +116,9 @@ export const ResetpasswordUser = createAsyncThunk<Iuser, { email: string; passwo
 
             const updatedUser: Iuser = {
                 idUser: userId,
-                email: email,
+                email: email, // Gán email đã kiểm tra
                 password: password,
-                // Thêm các trường khác nếu cần
-                fullname: userDoc.data().fullname, // Ví dụ, nếu bạn muốn trả về fullname
+                fullname: userDoc.data().fullname, 
                 username: userDoc.data().username,
                 role: userDoc.data().role,
                 phone: userDoc.data().phone,
@@ -128,6 +131,8 @@ export const ResetpasswordUser = createAsyncThunk<Iuser, { email: string; passwo
         }
     }
 );
+
+
 
 const userSlice = createSlice({
     name: 'user',

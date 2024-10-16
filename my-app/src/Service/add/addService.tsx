@@ -46,11 +46,11 @@ export const AddService = () => {
                             <div className="flex w flex-col gap-[12px]">
                                 <div className="w-[553px] h-[76px]">
                                     <label htmlFor="">Mã dịch vụ: <span className="text-[#FF4747] mb-[8px]">*</span></label>
-                                    <input type="text" name="idService" className="w-full h-[44px] border-[2px] rounded-lg" onChange={handleChange} />
+                                    <input type="text" name="idService" className="w-full h-[44px] border-[2px] rounded-lg p-2" onChange={handleChange} />
                                 </div>
                                 <div className="w-[553px] h-[76px]">
                                     <label htmlFor="">Tên dịch vụ: <span className="text-[#FF4747] ">*</span></label>
-                                    <input type="text" name="name" className="w-full h-[44px] border-[2px] rounded-lg" onChange={handleChange} />
+                                    <input type="text" name="name" className="w-full h-[44px] border-[2px] rounded-lg p-2" onChange={handleChange} />
                                 </div>
                             </div>
                             <div className="w-[553px] h-[164px] flex flex-col">

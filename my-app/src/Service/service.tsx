@@ -5,6 +5,9 @@ import { ServiceList } from '../component/serviceList';
 export const Service = () => {
     const [showStatus, setShowStatus] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState("Tất cả");
+    const [searchTerm,setSearchTerm] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     return (
         <>
             <div className="de-container">
@@ -30,20 +33,20 @@ export const Service = () => {
                         <p className='sl-box-title'>Chọn thời gian</p>
                         <div className='flex gap-1 items-center'>
                             <div className='date-1 bg-white rounded-lg'>
-                                <input className='w-[150px] h-[44px] rounded-lg p-2' type="date" />
+                                <input className='w-[150px] h-[44px] rounded-lg p-2' type="date" onChange={(e) => setStartDate(e.target.value)}/>
                             </div>
                             <div>
                             <i className="fa-solid fa-caret-right"></i>
                             </div>
                             <div className='date-1 bg-white rounded-lg'>
-                                <input className='w-[150px] h-[44px] rounded-lg p-2' type="date" />
+                                <input className='w-[150px] h-[44px] rounded-lg p-2' type="date" onChange={(e) => setEndDate(e.target.value)} />
                             </div>
                         </div>                        
                     </div>
                     <div className="de-search">
                         <p className='sl-box-title'>Từ khóa</p>
                         <div className='search'>
-                            <input type="text" placeholder="nhập từ khóa" />
+                            <input type="text" placeholder="nhập từ khóa" onChange={(e:any) => setSearchTerm(e.target.value)} />
                             <i className="fa-solid fa-magnifying-glass"></i>
                         </div>
                     </div>
@@ -60,7 +63,7 @@ export const Service = () => {
                                 <th className="p-2 "></th>
                             </tr>
                         </thead>
-                        <ServiceList/>
+                        <ServiceList selectedStatus={selectedStatus} searchTerm={searchTerm} startDate={startDate} endDate={endDate} />
                     </table>
                     <div className='flex flex-col'>
                     <div className='de-aside-btn'>

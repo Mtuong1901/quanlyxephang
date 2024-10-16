@@ -11,8 +11,8 @@ export const BaoCao = () => {
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const itemsPerPage = 10; // Number of items to display per page
-
+    const itemsPerPage = 8; // Number of items to display per page
+    const { services } = useSelector((state: RootState) => state.service);
     useEffect(() => {
         dispatch(FetchCapsoData());
     }, [dispatch]);
@@ -25,17 +25,20 @@ export const BaoCao = () => {
     };
 
     const filteredNumbers = numbers.filter(num => {
-        const ngaycap = new Date(num.ngaycap).toISOString().split('T')[0];
-        return ngaycap >= startDate && ngaycap <= endDate; // Adjusted to include date range
+        const ngaycapDate = new Date(num.ngaycap).toISOString().split('T')[0];
+        const isWithinDateRange = (startDate && endDate)
+            ? ngaycapDate >= startDate && ngaycapDate <= endDate
+            : true;
+        return isWithinDateRange;
     });
-
+    const sortedNumbers = filteredNumbers.sort((a, b) => a.number - b.number);
     // Calculate total pages
     const totalPages = Math.ceil(filteredNumbers.length / itemsPerPage);
 
     // Get current items based on page
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filteredNumbers.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = sortedNumbers.slice(indexOfFirstItem, indexOfLastItem);
 
     const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStartDate(e.target.value);
@@ -44,7 +47,7 @@ export const BaoCao = () => {
 
     const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEndDate(e.target.value);
-        setCurrentPage(1); // Reset to first page on date change
+        setCurrentPage(1);
     };
 
     return (
@@ -59,7 +62,6 @@ export const BaoCao = () => {
                                 <input
                                     className='w-[150px] h-[44px] rounded-lg p-2 border-[1px]'
                                     type="date"
-                                    value={startDate}
                                     onChange={handleStartDateChange}
                                 />
                             </div>
@@ -70,7 +72,6 @@ export const BaoCao = () => {
                                 <input
                                     className='w-[150px] h-[44px] rounded-lg p-2 border-[1px]'
                                     type="date"
-                                    value={endDate}
                                     onChange={handleEndDateChange}
                                 />
                             </div>
@@ -96,7 +97,15 @@ export const BaoCao = () => {
                                             <td className="p-2 border-r-[2px] border-[#FFE3CD]">{num.number}</td>
                                             <td className="p-2 border-r-[2px] border-[#FFE3CD]">{num.service_name}</td>
                                             <td className="p-2 border-r-[2px] border-[#FFE3CD]">{new Date(num.ngaycap).toLocaleDateString()}</td>
-                                            <td className="p-2 border-r-[2px] border-[#FFE3CD]">{num.status}</td>
+                                            <td className="p-2 border-r-[2px] border-[#FFE3CD]">
+                                                <button className={`w-[8px] h-[8px] ${num.status === "Đang chờ" ? "bg-[#4277FF]" :
+                                                    num.status === "Đã sử dụng" ? "bg-[#535261]" :
+                                                        num.status === "Bỏ qua" ? "bg-[#DC3545]" :
+                                                            "bg-[#7E7D88]" // mặc định
+                                                    } rounded-lg mr-2`}></button>
+
+                                                {num.status}
+                                            </td>
                                             <td className="p-2 border-r-[2px] border-[#FFE3CD]">{num.nguoncap}</td>
                                         </tr>
                                     );

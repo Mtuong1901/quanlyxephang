@@ -2,6 +2,8 @@ import { useState } from "react";
 import './capso.css';
 import { Link } from "react-router-dom";
 import { CapsoList } from "../component/capsoList";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 export const Capso = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [startDate, setStartDate] = useState('');
@@ -15,14 +17,21 @@ export const Capso = () => {
 
     const [showSourceStatus, setShowSourceStatus] = useState(false);
     const [selectedSourceStatus, setSelectedSourceStatus] = useState("Tất cả");
-
+    const { numbers } = useSelector((state: RootState) => state.capso);
+    // Phân trang
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(8);
+    const indexOfLastDevice = currentPage * itemsPerPage;
+    const indexOfFirstDevice = indexOfLastDevice - itemsPerPage;
+    const currentNumbers = numbers.slice(indexOfFirstDevice, indexOfLastDevice);
+    const totalPages = Math.ceil(numbers.length / itemsPerPage);
     return (
         <>
-            <div className="capso ">
+            <div className="capso">
                 <p className="text-[#FF7506] text-[24px] font-bold leading-[36px]">Quản lý cấp số</p>
                 <div className="flex gap-[24px] items-center ">
                     {/* Dropdown Tên Dịch Vụ */}
-                    <div className="tendichvu w-[154px] h-[72px] flex flex-col gap-1 mt-[16px] relative">
+                    <div className="tendichvu w-[154px] h-[62px] flex flex-col gap-1 mt-[16px] relative">
                         <p className="text-[#282739] text-[16px] leading-[24px] font-[600]">Tên dịch vụ</p>
                         <div className="w-full h-[44px] bg-white border-[2px] border-[#D4D4D7] rounded-lg flex justify-between p-2 items-center cursor-pointer" onClick={() => setShowServiceStatus(!showServiceStatus)}>
                             <p className="sl-title text-[#535261] text-[16px]">{selectedServiceStatus}</p>
@@ -43,8 +52,14 @@ export const Capso = () => {
                                     <li className={`${selectedServiceStatus === "Khám tai mũi họng" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám tai mũi họng'); setShowServiceStatus(false); }}>
                                         <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám tai mũi họng</p>
                                     </li>
-                                    <li className={`${selectedServiceStatus === "Khám tai mũi họng" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám tai mũi họng'); setShowServiceStatus(false); }}>
-                                        <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám tai mũi họng</p>
+                                    <li className={`${selectedServiceStatus === "Khám tim mạch" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám tim mạch'); setShowServiceStatus(false); }}>
+                                        <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám tim mạch</p>
+                                    </li>
+                                    <li className={`${selectedServiceStatus === "Khám hô hấp" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám hô hấp'); setShowServiceStatus(false); }}>
+                                        <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám hô hấp</p>
+                                    </li>
+                                    <li className={`${selectedServiceStatus === "Khám tổng quát" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám tổng quát'); setShowServiceStatus(false); }}>
+                                        <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám tổng quát</p>
                                     </li>
                                 </ul>
                             </div>
@@ -52,7 +67,7 @@ export const Capso = () => {
                     </div>
 
                     {/* Dropdown Tình Trạng Hoạt Động */}
-                    <div className="tinhtrang w-[154px] h-[72px] flex flex-col gap-1 mt-[16px] relative">
+                    <div className="tinhtrang w-[154px] h-[62px] flex flex-col gap-1 mt-[16px] relative">
                         <p className="text-[#282739] text-[16px] leading-[24px] font-[600]">Tình trạng</p>
                         <div className="w-full h-[44px] bg-white border-[2px] border-[#D4D4D7] rounded-lg flex justify-between p-2 items-center cursor-pointer" onClick={() => setShowActivityStatus(!showActivityStatus)}>
                             <p className="sl-title text-[#535261] text-[16px]">{selectedActivityStatus}</p>
@@ -79,7 +94,7 @@ export const Capso = () => {
                     </div>
 
                     {/* Dropdown Nguồn Cấp */}
-                    <div className="nguoncap w-[154px] h-[72px] flex flex-col gap-1 mt-[16px] relative">
+                    <div className="nguoncap w-[154px] h-[62px] flex flex-col gap-1 mt-[16px] relative">
                         <p className="text-[#282739] text-[16px] leading-[24px] font-[600]">Nguồn cấp</p>
                         <div className="w-full h-[44px] bg-white border-[2px] border-[#D4D4D7] rounded-lg flex justify-between p-2 items-center cursor-pointer" onClick={() => setShowSourceStatus(!showSourceStatus)}>
                             <p className="sl-title text-[#535261] text-[16px]">{selectedSourceStatus}</p>
@@ -102,7 +117,7 @@ export const Capso = () => {
                         )}
                     </div>
                     {/* thoi gian */}
-                    <div className=" w-[320px] h-[72px] flex flex-col gap-1 mt-[16px]">
+                    <div className=" w-[320px] h-[62px] flex flex-col gap-1 mt-[16px]">
                         <p className='text-[#282739] text-[16px] font-[600] leading-[24px]'>Chọn thời gian</p>
                         <div className='flex gap-1 items-center'>
                             <div className='date-1 bg-white rounded-lg'>
@@ -127,16 +142,16 @@ export const Capso = () => {
                         </div>
                     </div>
                     {/* Tim kiem */}
-                    <div className="w-[240px] h-[72px] flex flex-col mt-[16px]">
+                    <div className="w-[240px] h-[62px] flex flex-col mt-[16px]">
                         <p className='text-[#282739] text-[16px] font-[600] leading-[24px] mb-1'>Từ khóa</p>
                         <div className='w-[240px] h-[44] relative'>
-                            <input className="w-full h-[44px] border-[1px] rounded-lg p-2 " type="text" placeholder="nhập từ khóa" onChange={(e) => setSearchTerm(e.target.value)}  />
+                            <input className="w-full h-[44px] border-[1px] rounded-lg p-2 " type="text" placeholder="nhập từ khóa" onChange={(e) => setSearchTerm(e.target.value)} />
                             <i className="fa-solid fa-magnifying-glass absolute right-4 top-4 text-[#FF7506]"></i>
                         </div>
                     </div>
                 </div>
                 <div className="flex gap-[24px] mt-[16px]">
-                    <div className="w-[1112px] h-[450px] ">
+                    <div className="w-[1210px] h-[450px] ">
                         <table className="w-full rounded-xl bg-[#FF9138]">
                             <thead className=" h-[49px] text-[16px] text-white font-bold leading-[24px] text-left">
                                 <tr className="">
@@ -150,7 +165,7 @@ export const Capso = () => {
                                     <th className="p-2"></th>
                                 </tr>
                             </thead>
-                            <CapsoList searchTerm={searchTerm} startDate={startDate} endDate={endDate} selectedServiceStatus={selectedServiceStatus} selectedActivityStatus={selectedActivityStatus} selectedSourceStatus={selectedSourceStatus} />
+                            <CapsoList searchTerm={searchTerm} startDate={startDate} endDate={endDate} selectedServiceStatus={selectedServiceStatus} selectedActivityStatus={selectedActivityStatus} selectedSourceStatus={selectedSourceStatus} currentNumbers={currentNumbers} />
                         </table>
                     </div>
                     <div className='flex flex-col'>
@@ -166,6 +181,32 @@ export const Capso = () => {
                         </div>
 
                     </div>
+                </div>
+                <div className='phanpage flex justify-end mr-[110px] gap-2 '>
+                    <button
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className={`page-button h-[32px] ${currentPage === 1 ? "text-[#A9A9B0]" : ""} `}
+                    >
+                        <i className="fa-solid fa-caret-left"></i>
+                    </button>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index + 1}
+                            onClick={() => setCurrentPage(index + 1)}
+                            className={`page-button ${currentPage === index + 1 ? 'active bg-[#FF7506] text-white rounded-md' : ''} w-[32px] h-[32px]`}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+
+                    <button
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className={`page-button h-[32px] ${currentPage === totalPages ? "text-[#A9A9B0]" : ""} `}
+                    >
+                        <i className="fa-solid fa-caret-right"></i>
+                    </button>
                 </div>
             </div>
         </>

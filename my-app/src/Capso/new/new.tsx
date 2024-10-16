@@ -3,23 +3,49 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { addNewNumber } from "../../redux/slices/capsoSlice";
 import { Link } from "react-router-dom";
+import { getDocs, collection } from "firebase/firestore"; // Thêm vào
+import { db } from "../../config/FirebaseConfig"; // Đảm bảo rằng đường dẫn đúng
 
 export const New = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const [currentNum, setCurNum] = useState(2010001)
-    const { numbers, status, error } = useSelector((state: RootState) => state.capso);
+    const { numbers } = useSelector((state: RootState) => state.capso);
+    const [cus_name, setCus_name] = useState('');
     const [showServiceStatus, setShowServiceStatus] = useState(false);
     const [selectedServiceStatus, setSelectedServiceStatus] = useState("");
     const [modal, setModal] = useState(false);
-    const authen_username = useSelector((state: RootState) => state.auth.user)
+    const [currentNum, setCurrentNum] = useState<number | null>(null);
+
+    // Hàm để lấy số lớn nhất từ Firestore
+    const fetchCurrentNumber = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "capso"));
+            let maxNumber = 2010000; // Khởi tạo với số bắt đầu
+
+            querySnapshot.forEach((doc) => {
+                const docData = doc.data();
+                if (docData.number > maxNumber) {
+                    maxNumber = docData.number; // Cập nhật maxNumber nếu có số lớn hơn
+                }
+            });
+
+            setCurrentNum(maxNumber + 1); // Cập nhật currentNum
+        } catch (error) {
+            console.error("Error fetching current number: ", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchCurrentNumber(); // Gọi hàm khi component mount
+    }, []);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (selectedServiceStatus) {
+        if (selectedServiceStatus && cus_name && currentNum !== null) {
             const newNumber = {
                 service_name: selectedServiceStatus,
                 number: currentNum,
-                cus_name: authen_username?.fullname,
+                cus_name: cus_name,
                 status: 'Đang chờ',
                 ngaycap: new Date(),
                 hethan: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
@@ -28,7 +54,6 @@ export const New = () => {
 
             dispatch(addNewNumber(newNumber));
             setModal(true);
-            setCurNum(prevNumber => prevNumber + 1);
         }
     };
 
@@ -51,37 +76,23 @@ export const New = () => {
                                 </div>
                                 {showServiceStatus && (
                                     <div className="w-[400px] bg-white rounded-lg absolute mt-[44px] text-left cursor-pointer">
-                                        <ul className="mt-2 flex flex-col text-[14px] max-h-[200px] overflow-y-scroll overflow-x-hidden custom-scrollbar">
-
-                                            <li className={`${selectedServiceStatus === "Khám sản - Phụ khoa" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám sản - Phụ khoa'); setShowServiceStatus(false); }}>
-                                                <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám sản - Phụ khoa</p>
-                                            </li>
-                                            <li className={`${selectedServiceStatus === "Khám răng hàm mặt" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám răng hàm mặt'); setShowServiceStatus(false); }}>
-                                                <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám răng hàm mặt</p>
-                                            </li>
-                                            <li className={`${selectedServiceStatus === "Khám tai mũi họng" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám tai mũi họng'); setShowServiceStatus(false); }}>
-                                                <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám tai mũi họng</p>
-                                            </li>
-                                            <li className={`${selectedServiceStatus === "Khám tai mũi họng" ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus('Khám tai mũi họng'); setShowServiceStatus(false); }}>
-                                                <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">Khám tai mũi họng</p>
-                                            </li>
+                                        <ul className="mt-2 flex flex-col text-[14px] max-h-[150px] overflow-y-scroll overflow-x-hidden custom-scrollbar">
+                                            {["Khám sản - Phụ khoa", "Khám răng hàm mặt", "Khám tai mũi họng", "Khám tim mạch", "Khám tổng quát", "Khám hô hấp"].map(service => (
+                                                <li key={service} className={`${selectedServiceStatus === service ? "bg-[#FFF2E7]" : ""}`} onClick={() => { setSelectedServiceStatus(service); setShowServiceStatus(false); }}>
+                                                    <p className="w-full h-[44px] ml-2 mt-2 text-[#535261]">{service}</p>
+                                                </li>
+                                            ))}
                                         </ul>
                                     </div>
                                 )}
                             </div>
+                            <div className="flex flex-col">
+                                <label htmlFor="cus_name" className="text-left text-[#535261] text-[20px] font-bold leading-[30px] mt-[20px] mb-[12px]">Tên khách hàng</label>
+                                <input className="w-[400px] h-[44px] border-[1px] rounded-lg border-[#D4D4D7] p-2" type="text" id="cus_name" onChange={(e) => setCus_name(e.target.value)} placeholder="Nhập tên khách hàng" />
+                            </div>
                             <div className="flex gap-[32px] mt-[80px] justify-center">
-                                <Link to={`/capso`}
-
-                                    className="w-[115px] h-[48px] bg-[#FFF2E7] text-[#FF9138] text-[16px] font-bold rounded-xl p-3"
-                                >
-                                    Hủy
-                                </Link>
-                                <button
-                                    type="submit"
-                                    className="w-[115px] h-[48px] bg-[#FF9138] text-white text-[16px] font-bold rounded-xl"
-                                >
-                                    In số
-                                </button>
+                                <Link to={`/capso`} className="w-[115px] h-[48px] bg-[#FFF2E7] text-[#FF9138] text-[16px] font-bold rounded-xl p-3">Hủy</Link>
+                                <button type="submit" className="w-[115px] h-[48px] bg-[#FF9138] text-white text-[16px] font-bold rounded-xl">In số</button>
                             </div>
                         </form>
                     </div>
@@ -94,12 +105,12 @@ export const New = () => {
                         <i className="fa-solid fa-x absolute right-0 p-3 text-[24px] text-[#FF7506] cursor-pointer" onClick={() => setModal(false)}></i>
                         <div className="flex flex-col items-center">
                             <p className="text-[#535261] text-[32px] leading-[40px] mt-[48px] font-bold">Số thứ tự được cấp</p>
-                            <p className="text-[#FF7506] text-[56px] font-bold leading-[60px] mt-[24px]">{numbers.length ? numbers[numbers.length - 1].number : ""}</p>
+                            <p className="text-[#FF7506] text-[56px] font-bold leading-[60px] mt-[24px]">{currentNum !== null ? currentNum : 'Loading...'}</p>
                             <p className="text-[#282739] text-[18px] font-bold leading-[27px] mt-[24px]">Dịch vụ {selectedServiceStatus}</p>
                         </div>
                         <div className="time bg-[#FF9138] w-full h-[110px] rounded-br-2xl rounded-bl-2xl">
                             <p className="text-white text-[22px] leading-[33px] font-bold mt-[16px]">Thời gian cấp <span>{new Date().toLocaleString()}</span></p>
-                            <p className="text-white text-[22px] leading-[33px] font-bold mt-[12px]">Hạn sử dụng <span>{new Date().toLocaleString()}</span></p>
+                            <p className="text-white text-[22px] leading-[33px] font-bold mt-[12px]">Hạn sử dụng <span>{new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleString()}</span></p>
                         </div>
                     </div>
                 </div>

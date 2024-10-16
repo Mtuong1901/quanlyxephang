@@ -68,17 +68,24 @@ export const FetchOneNumbers = createAsyncThunk<Icapso, string>(
     }
 );
 
-// Add New Number with sequential ID
 export const addNewNumber = createAsyncThunk(
     'capso/capsomoi',
-    async (data: Omit<Icapso, 'number'>, { rejectWithValue, getState }) => {
+    async (data: Omit<Icapso, 'number'>, { rejectWithValue }) => {
         try {
-            const state = getState() as { capso: CapsoState };
-            const currentNumbers = state.capso.numbers;
-            
-            const maxNumber = currentNumbers.reduce((max, num) => Math.max(max, num.number), 0);
-            const newNumber = maxNumber + 1;
-            
+            // Lấy số lớn nhất từ Firestore
+            const querySnapshot = await getDocs(collection(db, "capso"));
+            let maxNumber = 2010001; 
+
+            querySnapshot.forEach((doc) => {
+                const docData = doc.data();
+                if (docData.number > maxNumber) {
+                    maxNumber = docData.number; // Cập nhật maxNumber nếu số hiện tại lớn hơn
+                }
+            });
+
+            const newNumber = maxNumber + 1; // Tạo số mới
+
+            // Thêm tài liệu mới vào Firestore
             const docRef = await addDoc(collection(db, "capso"), { ...data, number: newNumber });
             return { idNumber: docRef.id, number: newNumber, ...data };
         } catch (error: any) {
@@ -87,6 +94,7 @@ export const addNewNumber = createAsyncThunk(
         }
     }
 );
+
 
 const capsoSlice = createSlice({
     name: 'capso',
