@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { addDevice } from "../../redux/slices/deviceSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Idevice } from "../../Idevice";
-import { AppDispatch } from "../../redux/store";
+import { AppDispatch, RootState } from "../../redux/store";
+import { addActivityLog, IActivityLog } from "../../redux/slices/activitiesSlice";
 
 export const Add = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const [dropdown, setDropdown] = useState(false);
+    const user = useSelector((state:RootState) => state.auth.user)
     const [type, setType] = useState('');
     const [form, setForm] = useState<Idevice>({
         idDevice: '',
@@ -50,6 +52,15 @@ export const Add = () => {
         try {
             const formAction = await dispatch(addDevice(deviceData));
             if (addDevice.fulfilled.match(formAction)) {
+                const logData: IActivityLog = {
+                    id: '', 
+                    userId: user?.idUser || '',
+                    ip: '192.173.92',
+                    action: 'Thêm thiết bị',
+                    timestamp: new Date(),
+                    details: ' Thêm thiết bị mới vào hệ thống.',
+                };
+                dispatch(addActivityLog(logData));
                 console.log('Device added:', formAction.payload);
                 alert('Thêm thiết bị thành công');
                 navigate('/thietbi');

@@ -1,7 +1,7 @@
 // src/redux/slices/userSlice.ts
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Iuser } from "../../Iuser";
-import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../config/FirebaseConfig";
 import { getAuth, verifyPasswordResetCode } from "firebase/auth";
 
@@ -21,7 +21,7 @@ const initialState:UserState = {
 
 // Fetch all users
 export const FetchUser = createAsyncThunk('user/fetchUser', async () => {
-    const user_col = collection(db, 'users');
+    const user_col = collection(db, 'user');
     const userDoc = await getDocs(user_col);
     const userList = userDoc.docs.map((doc) => ({
         idUser: doc.data().idUser,
@@ -32,6 +32,8 @@ export const FetchUser = createAsyncThunk('user/fetchUser', async () => {
         email: doc.data().email,
         phone: doc.data().phone,
         img: doc.data().img,
+        mota: doc.data().mota,
+        status : doc.data().status
     })) as Iuser[];
     return userList;
 });
@@ -79,6 +81,8 @@ export const loginUser = createAsyncThunk<Iuser, { username: string; password: s
                 email: userData.email,
                 phone: userData.phone,
                 img: userData.img,
+                mota: userData.mota,
+                status : userData.status,
             }
             return user;
         } catch (error) {
@@ -123,6 +127,8 @@ export const ResetpasswordUser = createAsyncThunk<Iuser, { email: string; passwo
                 role: userDoc.data().role,
                 phone: userDoc.data().phone,
                 img: userDoc.data().img,
+                mota: userDoc.data().mota,
+                status : userDoc.data().status,
             };
 
             return updatedUser; // Trả về người dùng đã được cập nhật
@@ -131,6 +137,19 @@ export const ResetpasswordUser = createAsyncThunk<Iuser, { email: string; passwo
         }
     }
 );
+export const addUser = createAsyncThunk<Iuser, Iuser, { rejectValue: string }>(
+    'user/addUser',
+    async (newUser, { rejectWithValue }) => {
+        try {
+            const userRef = doc(collection(db, 'user'));
+            await setDoc(userRef, newUser);
+                        return { ...newUser, idUser: userRef.id }; 
+        } catch (error) {
+            return rejectWithValue("Cập nhật thông tin người dùng thất bại");
+        }
+    }
+);
+
 
 
 
@@ -191,9 +210,23 @@ const userSlice = createSlice({
             .addCase(ResetpasswordUser.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Cập nhật mật khẩu thất bại';
+            })
+            .addCase(addUser.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(addUser.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.users.push(action.payload); 
+            })
+            
+            .addCase(addUser.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message || 'Cập nhật mật khẩu thất bại';
             });
+            
     },
 });
 
 export const { logout } = userSlice.actions;
-export default userSlice.reducer;
+export default userSlice.reducer; 

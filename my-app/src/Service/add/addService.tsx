@@ -1,13 +1,15 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-import { AppDispatch } from "../../redux/store"
+import { AppDispatch, RootState } from "../../redux/store"
 import { addService } from "../../redux/slices/serviceSlice";
 import { useState } from "react";
 import { Iservice } from "../../Iservice";
+import { addActivityLog, IActivityLog } from "../../redux/slices/activitiesSlice";
 
 export const AddService = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const user= useSelector((state:RootState) => state.auth.user)
     const [formdata, setFormData] = useState<Iservice>({
         idService: '',
         name: '',
@@ -26,6 +28,15 @@ export const AddService = () => {
             .unwrap().then(
                 () => {
                     alert('Thêm dịch vụ thành công');
+                    const logData: IActivityLog = {
+                        id: '', 
+                        userId: user?.idUser || '',
+                        ip: '192.173.92',
+                        action: 'Thêm dịch vụ',
+                        timestamp: new Date(),
+                        details: ' Thêm dịch vụ vào hệ thống.',
+                    };
+                    dispatch(addActivityLog(logData));
                     navigate('/dichvu');
                 }
             )

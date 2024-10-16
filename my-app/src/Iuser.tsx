@@ -1,5 +1,5 @@
 export interface Iuser {
-    idUser : string;
+    idUser : string | null;
     fullname: string;
     username: string;
     password: string;
@@ -7,4 +7,6 @@ export interface Iuser {
     phone: string;
     role: string;
     img: string;
+    mota: string;
+    status: string;
 }

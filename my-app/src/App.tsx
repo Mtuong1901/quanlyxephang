@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { Header } from './component/header';
 import LeftNav from './Navbar/left/leftnav';
 import RightNav from './Navbar/right/rightnav';
@@ -20,6 +19,12 @@ import { New } from './Capso/new/new';
 import Forgotpass from './Login/forgotpass/forgotpass';
 import { CapsoDetail } from './Capso/detail/capsoDetail';
 import Resetpassword from './Login/resetpass/resetpass';
+import { Role } from './Setting/role/role';
+import { Account } from './Setting/account/account';
+import { UserLog } from './Setting/userlog/userlog';
+import { AddRole } from './Setting/role/addRole/addrole';
+import { UpdateRole } from './Setting/role/updateRole/updateRole';
+import { AddUser } from './Setting/account/adduser/adduser';
 
 // Tạo MainLayout component
 const MainLayout = () => {
@@ -103,6 +108,15 @@ export const App = () => {
         {/* baocaoRouter */}
         <Route path='/baocao' element={<Sublayout/>}>
         <Route path='/baocao' element={<BaoCao/>} />
+        </Route>
+        {/* setting */}
+        <Route path='/setting' element={<Sublayout/>}>
+        <Route path='/setting/role' element={<Role/>}/>
+        <Route path='/setting/role/addrole' element={<AddRole/>}/>
+        <Route path='/setting/role/updaterole/:id' element={<UpdateRole/>}/>
+        <Route path='/setting/account' element={<Account/>}/>
+        <Route path='/setting/account/addaccount' element={<AddUser/>}/>
+        <Route path='/setting/userlog' element={<UserLog/>}/>
         </Route>
       </Routes>
     </Router>
